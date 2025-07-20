@@ -1,0 +1,329 @@
+/*
+ * ClaAdcDrv.cla
+ *
+ *  Created on: Aug 20, 2021
+ *      Author: Yahali
+ */
+#include "ClaShared.h"
+#define CPU1
+#include "..\F2838x_utils\f2838x_device.h"
+
+#ifndef CPU_CLK_MHZ
+#define CPU_CLK_MHZ 200
+#endif
+
+
+#define ADC_SCALE  4.57763671e-05f
+#define LSwThold 2.25f
+
+__interrupt void Cla1Task1 ( void )
+{
+    long unsigned  newT , lTemp1, lTemp2  , useclapse  ;
+    float state ;
+    float tlatL , tlatR , pdelta , tdelta , maxspeed;
+    long  newpR, newpL , tempL , tempT ;
+    float dist , distN , InvVpot , lswrequest , rswrequest ;
+
+    ClaState.ClaIntCntr += 1 ;
+
+    ClaState.Raw.IndSenW1 = AdcaResultRegs.ADCRESULT0 ;
+    ClaState.Raw.IndSenW2 = AdcaResultRegs.ADCRESULT1 ;
+    ClaState.Raw.PotSt1 = AdcaResultRegs.ADCRESULT2 ;
+    ClaState.Raw.PotSt2 = AdcaResultRegs.ADCRESULT3 ;
+    ClaState.Raw.NK1Pot = AdcbResultRegs.ADCRESULT0 ;
+    ClaState.Raw.OLoadSt1 = AdcbResultRegs.ADCRESULT1 ;
+    ClaState.Raw.OLoadSt2 = AdcbResultRegs.ADCRESULT2 ;
+    ClaState.Raw.LaserSamp1 = AdcbResultRegs.ADCRESULT3 ;
+    ClaState.Raw.LaserSamp2 = AdcbResultRegs.ADCRESULT4 ;
+    ClaState.Raw.OLoadNK = AdcbResultRegs.ADCRESULT5 ;
+
+    ClaState.Raw.V12Out = AdccResultRegs.ADCRESULT0 ;
+    ClaState.Raw.V5Samp = AdccResultRegs.ADCRESULT1 ;
+    ClaState.Raw.HardVer = AdccResultRegs.ADCRESULT2 ;
+    ClaState.Raw.VPot = AdccResultRegs.ADCRESULT3 ;
+    ClaState.Raw.NK2Pot = AdccResultRegs.ADCRESULT4 ;
+
+    // Deal time
+    newT = ECap6Regs.TSCTR ;
+    useclapse = (long unsigned) ( (float) ( newT - ClaState.Timer.RawEcapTimer ) * 0.005f );
+
+    tempL = ClaState.Timer.RawEcapTimer + (long unsigned) ((float) useclapse * 200.0f)   ;
+    tempT = ClaState.Timer.UsecTimer + useclapse ;
+    ClaState.Timer.upd += 1  ;
+    ClaState.Timer.RawEcapTimer = tempL   ;
+    ClaState.Timer.UsecTimer = tempT ;
+    ClaState.Timer.upd += 1 ;
+
+    ClaState.Timer.UsecTimerAtMsec +=  (float) useclapse ;
+    if ( ClaState.Timer.UsecTimerAtMsec >= 1000.0f )
+    {
+        ClaState.Timer.UsecTimerAtMsec -= 1000.0f ;
+        ClaState.Timer.mSecTimer += 1 ;
+        ClaState.Timer.mSecTimerAtSec += 1.0f ;
+        if ( ClaState.Timer.mSecTimerAtSec >= 1000.0f )
+        {
+            ClaState.Timer.mSecTimerAtSec -= 1000.0f ;
+            ClaState.Timer.SecTimer += 1 ;
+        }
+    }
+
+    ClaState.Filt.IndSenW1 = ClaState.Filt.IndSenW1 * 0.9f + 0.1f * ClaState.Raw.IndSenW1 *(ADC_SCALE) ;
+    ClaState.Filt.IndSenW2 = ClaState.Filt.IndSenW2 * 0.9f + 0.1f * ClaState.Raw.IndSenW2 *(ADC_SCALE);
+    ClaState.Filt.PotSt1 = ClaState.Filt.PotSt1 * 0.9f + 0.1f * ClaState.Raw.PotSt1 *(ADC_SCALE);
+    ClaState.Filt.PotSt2 = ClaState.Filt.PotSt2 * 0.9f + 0.1f * ClaState.Raw.PotSt2 *(ADC_SCALE);
+    ClaState.Filt.NK1Pot =ClaState.Filt.NK1Pot * 0.9f + 0.1f * ClaState.Raw.NK1Pot *(ADC_SCALE);
+
+    ClaState.Filt.OLoadSt1 =  ClaState.Filt.OLoadSt1 * 0.9f + 0.1f * ClaState.Raw.OLoadSt1 *(ADC_SCALE);
+    ClaState.Filt.OLoadSt2 =  ClaState.Filt.OLoadSt2 * 0.9f + 0.1f * ClaState.Raw.OLoadSt2 *(ADC_SCALE);
+    ClaState.Filt.LaserSamp1 =  ClaState.Filt.LaserSamp1 * 0.9f + 0.1f * ClaState.Raw.LaserSamp1 *(ADC_SCALE);
+    ClaState.Filt.LaserSamp2 =  ClaState.Filt.LaserSamp2 * 0.9f + 0.1f * ClaState.Raw.LaserSamp2 *(ADC_SCALE);
+    ClaState.Filt.OLoadNK = ClaState.Filt.OLoadNK * 0.9f + 0.1f * ClaState.Raw.OLoadNK *(ADC_SCALE);
+
+    ClaState.Filt.V12Out = ClaState.Filt.V12Out * 0.9f + 0.1f * ClaState.Raw.V12Out *(ADC_SCALE * 5.54f);
+    ClaState.Filt.V5Samp =  ClaState.Filt.V5Samp * 0.9f + 0.1f * ClaState.Raw.V5Samp *(ADC_SCALE * 2.0f );
+    ClaState.Filt.HardVer =  ClaState.Filt.HardVer * 0.9f + 0.1f * ClaState.Raw.HardVer *(ADC_SCALE);
+    ClaState.Filt.VPot =  ClaState.Filt.VPot * 0.9f + 0.1f * ClaState.Raw.VPot *(ADC_SCALE * 2.0f);
+    ClaState.Filt.NK2Pot =  ClaState.Filt.NK2Pot * 0.9f + 0.1f * ClaState.Raw.NK2Pot *(ADC_SCALE);
+
+    InvVpot = 1.0f / __mmaxf32(ClaState.Filt.VPot,2.0f) ;
+    ClaState.Nk1PotRatio = ClaState.Filt.NK1Pot * InvVpot ;
+    ClaState.Nk2PotRatio = ClaState.Filt.NK2Pot * InvVpot ;
+    ClaState.PotSt1Ratio = ClaState.Filt.PotSt1 * InvVpot ;
+    ClaState.PotSt2Ratio = ClaState.Filt.PotSt2 * InvVpot ;
+
+
+    // Read wheel encoders
+    EncRsltBuf[2] = ClaState.Timer.RawEcapTimer ;
+    lTemp1 = EQep1Regs.QPOSCNT ;
+    EncRsltBuf[1] = (long unsigned) EQep1Regs.QCTMRLAT ;
+    lTemp2 = EQep1Regs.QPOSCNT ;
+    if (lTemp1 != lTemp2 )
+    { // Read again if just now changed
+        EncRsltBuf[1] = (long unsigned) EQep1Regs.QCTMRLAT ;
+    }
+    EncRsltBuf[0] = lTemp2 ;
+    EncRsltBuf[5] = EncRsltBuf[2] ;
+    lTemp1 = EQep2Regs.QPOSCNT ;
+    EncRsltBuf[4] = (long unsigned) EQep2Regs.QCTMRLAT ;
+    lTemp2 = EQep2Regs.QPOSCNT ;
+    if (lTemp1 != lTemp2 )
+    {
+        EncRsltBuf[4] = (long unsigned) EQep2Regs.QCTMRLAT ;
+    }
+    EncRsltBuf[3] = lTemp2 ;
+
+    // Deal inductive sensors
+    //////////////////////////
+    state =  (ClaState.Filt.IndSenW2 > LSwThold ) ? 1.0f : 0 ;
+    rswrequest = ClaState.RLimit.SwitchRequest ;
+    lswrequest = ClaState.LLimit.SwitchRequest ;
+
+    if ( rswrequest)
+    {
+        if ( state != ClaState.RLimit.PresentValue )
+        { // Was change
+            if ( state )
+            { // to high
+                if (ClaState.RLimit.RiseMarker == 0 )
+                {
+                    ClaState.RLimit.CaptEncoderH = EQep2Regs.QPOSCNT ;
+                    ClaState.RLimit.RiseMarker = 1 ;
+                }
+            }
+            else
+            {
+                ClaState.RLimit.CaptEncoderL = EQep2Regs.QPOSCNT ;
+                ClaState.RLimit.FallMarker = 1 ;
+            }
+        }
+    }
+    ClaState.RLimit.PresentValue = state ;
+
+    // Deal inductive sensors
+    state =  (ClaState.Filt.IndSenW1 > LSwThold ) ? 1.0f : 0 ;
+    if ( lswrequest )
+    {
+        if ( state != ClaState.LLimit.PresentValue )
+        {
+            if ( state )
+            {
+                if (ClaState.LLimit.RiseMarker == 0 )
+                {
+                    ClaState.LLimit.CaptEncoderH = EQep1Regs.QPOSCNT ;
+                    ClaState.LLimit.RiseMarker = 1 ;
+                }
+            }
+            else
+            {
+                ClaState.LLimit.CaptEncoderL = EQep1Regs.QPOSCNT ;
+                ClaState.LLimit.FallMarker = 1 ;
+            }
+        }
+    }
+    ClaState.LLimit.PresentValue = state ;
+
+
+// Wheel speed calculation
+////////////////////////
+    ClaState.SpeedEstCnt += 1.0f ;
+    if ( ClaState.SpeedEstCnt < 256.0 )
+    {
+        // Test if switch is valid
+        if ( ( 1.0f - ClaState.RLimit.PresentValue ) * ClaState.RLimit.RiseMarker *
+                ClaState.RLimit.FallMarker * rswrequest * ( 1.0f -ClaState.RLimit.SwitchDetectValid ) > 0.5f)
+        {
+            dist =
+                    ( ClaState.RLimit.CaptEncoderL - ClaState.RLimit.CaptEncoderH )
+                        * ClaState.RLimit.SwitchRequestDir ;
+            distN = dist * ClaInput.InvLimitSwWidthWhEncoderAct;
+            if ( distN > 0.35f && distN < 2.5f )
+            {
+                ClaState.RLimit.DetectWidth = dist ;
+                ClaState.RLimit.EncoderAtSwitch = ClaState.RLimit.CaptEncoderH + (long)(dist * 0.5f) ;
+                ClaState.RLimit.SwitchDetectValid = 1 ;
+            }
+        }
+        if ( ( 1.0f - ClaState.LLimit.PresentValue ) * ClaState.LLimit.RiseMarker *
+                ClaState.LLimit.FallMarker * rswrequest * ( 1.0f - ClaState.LLimit.SwitchDetectValid ) > 0.5f)
+        {
+            dist =
+                    ( ClaState.LLimit.CaptEncoderL - ClaState.LLimit.CaptEncoderH )
+                        * ClaState.LLimit.SwitchRequestDir * ClaInput.InvLimitSwWidthWhEncoderAct;
+
+            if ( dist > 0.35f && dist < 2.5f )
+            {
+                ClaState.LLimit.DetectWidth = dist ;
+                ClaState.LLimit.EncoderAtSwitch = ClaState.LLimit.CaptEncoderH + (long)(dist * 0.5f) ;
+                ClaState.LLimit.SwitchDetectValid = 1 ;
+            }
+        }
+    }
+    else
+    { // Time to estimate wheel speed
+        ClaState.SpeedEstCnt = 0.0f ;
+        tlatL = ClaState.Timer.UsecTimer - (long) ( (long unsigned)EncRsltBuf[1] * (128.0f/CPU_CLK_MHZ)  ) ; // 7 shifts because of QCAPCTL.CCPS = 7
+        tlatR = ClaState.Timer.UsecTimer - (long) ( (long unsigned)EncRsltBuf[4] * (128.0f/CPU_CLK_MHZ)  ) ; // 7 shifts because of QCAPCTL.CCPS = 7
+        newpL = EncRsltBuf[0];
+        newpR = EncRsltBuf[3] ;
+
+        if ( ClaState.WheelEncR.Init)
+        {
+            ClaState.WheelEncR.Init = 0;
+            ClaState.WheelEncR.Speed = 0 ;
+            ClaState.WheelEncR.Time  = tlatR - 10000 ;
+            ClaState.WheelEncL.Init = 0;
+            ClaState.WheelEncL.Speed = 0 ;
+            ClaState.WheelEncL.Time  = tlatL - 10000 ;
+            ClaState.WheelEncR.Position = newpR ;
+            ClaState.WheelEncL.Position = newpL ;
+        }
+        else
+        {
+            pdelta = (float) ( newpR - ClaState.WheelEncR.Position)  ;
+            ClaState.WheelEncR.Position = newpR ;
+            if ( pdelta == 0 )
+            { // No position change
+                tdelta   = (float) ( ClaState.Timer.UsecTimer - ClaState.WheelEncR.Time ) * 1e-6f ;
+                if ( tdelta > 0.2f )
+                {
+                    ClaState.WheelEncR.Speed = 0 ;
+                    ClaState.WheelEncR.Time = ClaState.Timer.UsecTimer - 200000 ;
+                }
+                else
+                {
+                    maxspeed = 1.0f / __mmaxf32( tdelta , 2.5e-3f ) ;
+                    ClaState.WheelEncR.Speed = __mminf32 ( __mmaxf32( ClaState.WheelEncR.Speed , -maxspeed ) , maxspeed) ;
+                }
+            }
+            else
+            {
+                tdelta   =  __mminf32 ( tlatR - ClaState.WheelEncR.Time , 500 )  ;
+                ClaState.WheelEncR.Time = tlatR ;
+
+                if ( ClaState.WheelEncR.Speed == 0 )
+                {
+                    if ( fabsf(pdelta) > 0  )
+                    {
+                        pdelta -= 0.8f ;
+                    }
+                    else
+                    {
+                        pdelta += 0.8f ;
+                    }
+                }
+                ClaState.WheelEncR.Speed =  pdelta / tdelta ;
+            }
+
+            pdelta = (float) ( newpL - ClaState.WheelEncL.Position)  ;
+            ClaState.WheelEncL.Position = newpL ;
+            if ( pdelta == 0 )
+            { // No position change
+                tdelta   = (float) ( ClaState.Timer.UsecTimer - ClaState.WheelEncL.Time ) * 1e-6f ;
+                if ( tdelta > 0.2f )
+                {
+                    ClaState.WheelEncL.Speed = 0 ;
+                    ClaState.WheelEncL.Time = ClaState.Timer.UsecTimer - 200000 ;
+                }
+                else
+                {
+                    maxspeed = 1.0f / __mmaxf32( tdelta , 2.5e-3f ) ;
+                    ClaState.WheelEncL.Speed = __mminf32 ( __mmaxf32( ClaState.WheelEncL.Speed , -maxspeed ) , maxspeed) ;
+                }
+            }
+            else
+            {
+                tdelta   =  __mminf32 ( tlatL - ClaState.WheelEncL.Time , 500 )  ;
+                ClaState.WheelEncL.Time = tlatL ;
+
+                if ( ClaState.WheelEncL.Speed == 0 )
+                {
+                    if ( fabsf(pdelta) > 0  )
+                    {
+                        pdelta -= 0.8f ;
+                    }
+                    else
+                    {
+                        pdelta += 0.8f ;
+                    }
+                }
+                ClaState.WheelEncL.Speed =  pdelta / tdelta ;
+            }
+        }
+    }
+}
+
+
+interrupt void Cla1Task2 ( void )
+{
+
+}
+
+interrupt void Cla1Task3 ( void )
+{
+
+}
+
+interrupt void Cla1Task4 ( void )
+{
+
+}
+
+interrupt void Cla1Task5 ( void )
+{
+
+}
+
+interrupt void Cla1Task6 ( void )
+{
+
+}
+
+interrupt void Cla1Task7 ( void )
+{
+
+}
+
+interrupt void Cla1Task8 ( void )
+{
+
+}

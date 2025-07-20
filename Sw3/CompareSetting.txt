@@ -1,0 +1,17 @@
+Folders exclude
+
+BolshoyManipCpu2\CPU2
+BolshoyBoot2\CPU2
+BolshoyMain\CcsPrj\CPU1
+BolshoyBoot\CcsPrj\CPU1
+BolshoyBoot\DebugDsp
+Loader377\Boot377\Debug
+PDSoft\Debug
+PDSoft\.settings
+.git
+
+
+Files exclude
+*.mat
+*.jsn
+PDSoft\.*

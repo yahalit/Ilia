@@ -1,0 +1,16 @@
+/*
+ * BITTimerAlloc.h
+ *
+ *  Created on: May 13, 2023
+ *      Author: yahal
+ */
+
+#ifndef APPLICATION_BOOTBITTIMERALLOC_H_
+#define APPLICATION_BOOTBITTIMERALLOC_H_
+
+//#define NSYS_TIMER_CMP_ARRAY 16
+#define TIMER_ARR_STAM_WAIT_IDLE 0 // Reserved
+#define TIMER_MCAN_BUSOFF 1
+#define TIMER_AUTO_MOTOROFF 2
+
+#endif /* APPLICATION_BOOTBITTIMERALLOC_H_ */

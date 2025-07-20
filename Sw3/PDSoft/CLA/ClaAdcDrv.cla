@@ -1,0 +1,90 @@
+/*
+ * ClaAdcDrv.cla
+ *
+ *  Created on: Sep 15, 2021
+ *      Author: User
+ */
+
+
+/*
+ * ClaAdcDrv.cla
+ *
+ *  Created on: Aug 20, 2021
+ *      Author: Yahali
+ */
+#include "ClaShared.h"
+#include "..\TiSoft\F28x_Project.h"     // DSP28x Headerfile
+
+//#include "..\F2838x_utils\f2838x_device.h"
+
+#ifndef CPU_CLK_MHZ
+#define CPU_CLK_MHZ 200
+#endif
+
+__interrupt void Cla1Task1 ( void )
+{
+    float   OneOverV36 ;
+    ClaState.Raw.Volts24 = (float) AdcaResultRegs.ADCRESULT0 ;
+    ClaState.Raw.V36 = (float) AdcaResultRegs.ADCRESULT1 ;
+    ClaState.Raw.CurServo = (float) AdcaResultRegs.ADCRESULT2 ;
+    ClaState.Raw.CurAirPump[1] = (float) AdcaResultRegs.ADCRESULT3 ;
+    ClaState.Raw.CurAirPump[2] = (float) AdcaResultRegs.ADCRESULT4 ;
+    ClaState.Raw.VServo = (float) AdcaResultRegs.ADCRESULT5 ;
+    ClaState.Raw.VBat54[0] = (float) AdcaResultRegs.ADCRESULT14 ;
+    ClaState.Raw.Volts12[0] = (float) AdcaResultRegs.ADCRESULT15 ;
+
+    ClaState.Raw.CurAirPump[0] = (float) AdcbResultRegs.ADCRESULT0 ;
+    ClaState.Raw.Cur5 = (float) AdcbResultRegs.ADCRESULT1 ;
+    ClaState.Raw.Volts5 = (float) AdcbResultRegs.ADCRESULT2 ;
+    ClaState.Raw.IShunt = (float) AdcbResultRegs.ADCRESULT3 ;
+    ClaState.Raw.Cur24 = (float) AdcbResultRegs.ADCRESULT4 ;
+    ClaState.Raw.Cur12 = (float) AdcbResultRegs.ADCRESULT5 ;
+    ClaState.Raw.VBat54[1] = (float) AdcbResultRegs.ADCRESULT14 ;
+    ClaState.Raw.Volts12[1] = (float) AdcbResultRegs.ADCRESULT15 ;
+
+    ClaState.Filt.Volts24 = ClaState.Filt.Volts24 * 0.9f + 0.1f * ( ClaState.Raw.Volts24 * AdcGains[0] ) ;
+    ClaState.Filt.V36 = ClaState.Filt.V36 * 0.9f + 0.1f * ( ClaState.Raw.V36 * AdcGains[1] ) ;
+    ClaState.Filt.CurServo = ClaState.Filt.CurServo * 0.4f + 0.6f * ( ClaState.Raw.CurServo * AdcGains[2] ) ;
+    ClaState.Filt.CurAirPump[1] = ClaState.Filt.CurAirPump[1] * 0.9f + 0.1f * ( ClaState.Raw.CurAirPump[1] * AdcGains[3] ) ;
+    ClaState.Filt.CurAirPump[2] = ClaState.Filt.CurAirPump[2] * 0.9f + 0.1f * ( ClaState.Raw.CurAirPump[2] * AdcGains[4] ) ;
+    ClaState.Filt.VServo = ClaState.Filt.VServo * 0.9f + 0.1f * ( ClaState.Raw.VServo * AdcGains[5] ) ;
+    ClaState.Filt.VBat54[0] = ClaState.Filt.VBat54[0] * 0.9f + 0.1f * ( ClaState.Raw.VBat54[0] * AdcGains[6] ) ;
+    ClaState.Filt.Volts12[0] = ClaState.Filt.Volts12[0] * 0.9f + 0.1f * ( ClaState.Raw.Volts12[0] * AdcGains[7] ) ;
+    ClaState.Filt.CurAirPump[0] = ClaState.Filt.CurAirPump[0] * 0.9f + 0.1f * ( ClaState.Raw.CurAirPump[0] * AdcGains[8] ) ;
+    ClaState.Filt.Cur5 = ClaState.Filt.Cur5 * 0.9f + 0.1f * ( ClaState.Raw.Cur5 * AdcGains[9] ) ;
+    ClaState.Filt.Volts5 = ClaState.Filt.Volts5 * 0.9f + 0.1f * ( ClaState.Raw.Volts5 * AdcGains[10] ) ;
+    ClaState.Filt.IShunt = ClaState.Filt.IShunt * 0.9f + 0.1f * ( ClaState.Raw.IShunt * AdcGains[11] ) ;
+    ClaState.Filt.Cur24 = ClaState.Filt.Cur24 * 0.4f + 0.6f * ( ClaState.Raw.Cur24 * AdcGains[12] ) ;
+    ClaState.Filt.Cur12 = ClaState.Filt.Cur12 * 0.4f + 0.6f * ( ClaState.Raw.Cur12 * AdcGains[13] ) ;
+    ClaState.Filt.VBat54[1]  = ClaState.Filt.VBat54[1]  * 0.9f + 0.1f * ( ClaState.Raw.VBat54[1]  * AdcGains[6] ) ;
+    ClaState.Filt.Volts12[1] = ClaState.Filt.Volts12[1] * 0.9f + 0.1f * ( ClaState.Raw.Volts12[1] * AdcGains[7] ) ;
+
+    OneOverV36 = 1.0/ __mmaxf32(  ClaState.Filt.V36, 0.5f ) ;
+    ClaState.V54NowRatio    = __mminf32( ClaState.Filt.VServo  / __mmaxf32( (ClaState.Filt.VBat54[1]+ClaState.Filt.VBat54[0]) * 0.5f , 0.5f ) , 1.0f)  ;
+    ClaState.V24NowRatio    = __mminf32( ClaState.Filt.Volts24 * OneOverV36 , 1.0f)  ;
+    ClaState.V12NowRatio    = __mminf32( 0.5f * ( ClaState.Filt.Volts12[0] + ClaState.Filt.Volts12[1]) * OneOverV36, 1.0f)  ;
+    ClaState.V24FinalRatio  = __mminf32( Buck24Control.VSetPoint * OneOverV36  , 1.0f)  ;
+    ClaState.V12FinalRatio  = __mminf32( Buck12Control.VSetPoint * OneOverV36  , 1.0f)  ;
+}
+
+__interrupt void Cla1Task2 ( void )
+{
+}
+__interrupt void Cla1Task3 ( void )
+{
+}
+__interrupt void Cla1Task4 ( void )
+{
+}
+__interrupt void Cla1Task5 ( void )
+{
+}
+__interrupt void Cla1Task6 ( void )
+{
+}
+__interrupt void Cla1Task7 ( void )
+{
+}
+__interrupt void Cla1Task8 ( void )
+{
+}

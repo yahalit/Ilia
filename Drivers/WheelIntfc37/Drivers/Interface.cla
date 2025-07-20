@@ -1,0 +1,457 @@
+/*
+ * Interface.cla
+ *
+ *  Created on: Jun 25, 2023
+ *      Author: yahal
+ */
+#define CLA_FILETYPE
+#define CLA_VAR_OWNER_CLA
+#include <stdint.h>
+
+#include "..\Application\Revisions.h"
+#include "ClaDefs.h"
+#include "..\Application\ConstDef.h"
+#include "LowLevel.h"
+
+#define QEPSTS_CDEF_MASK 4
+
+inline
+float ClafSat( float x , float y )
+{
+    return __mmaxf32(__mminf32(x,y),-y);
+}
+
+
+#define ENCODER_BASE EQEP1_BASE
+inline
+void ReadEncPosition1( void)
+{
+    long pos ;
+    float  dpos ;
+    long CountTime   ;
+    long lNext , dlNext;
+    float sg ;
+    float up ;
+    short unsigned ctr ;
+
+    ctr = HWREGH(EPWM1_BASE + EPWM_O_TBCTR) ;
+    HWREG(ENCODER_BASE + EQEP_O_QUTMR) = (long unsigned) ctr ;
+    ClaState.Encoder1.Stat = HWREGH(ENCODER_BASE + EQEP_O_QEPSTS) ;
+    pos  = HWREG(ENCODER_BASE + EQEP_O_QPOSLAT) ;
+    ClaState.Encoder1.now =  HWREG (ECAP2_BASE + ECAP_O_TSCTR )  ; // runs at CPU rate (CPU_CLK_MHZ)
+    ClaState.Encoder1.TimeLat   = (long unsigned)HWREGH(ENCODER_BASE + EQEP_O_QCTMRLAT); // Catch of pulse time
+    if ( ClaState.Encoder1.Stat & QEPSTS_CDEF_MASK)
+    { //If there was a change direction event, ok we note, and reset it
+        HWREGH(ENCODER_BASE + EQEP_O_QEPSTS) |= QEPSTS_CDEF_MASK ;
+    }
+
+
+    if ( ClaState.Encoder1.InvertEncoder )
+    {
+        pos = -pos ;
+    }
+
+    if ( ClaState.Encoder1.Pos == pos )
+    { // Nothing changed
+        if (ClaState.Encoder1.Stat & QEPSTS_CDEF_MASK )
+        {
+            ClaState.Encoder1.MotSpeedHz = 0 ;
+        }
+
+        ClaState.Encoder1.DeltaT = __mmaxf32( (float) (ClaState.Encoder1.now - ClaState.Encoder1.SpeedTime) * INV_CPU_CLK_HZ , CUR_SAMPLE_TIME_USEC*1e-6f);
+
+        if ( ClaState.Encoder1.DeltaT >  MAX_TIME_FOR_ZERO_SPEED)
+        {
+            ClaState.Encoder1.MotSpeedHz = 0 ;
+        }
+
+        if (ClaState.Encoder1.MotSpeedHz )
+        {
+            ClaState.Encoder1.MotSpeedHz = (ClaState.Encoder1.MotSpeedHz>=0?1:-1) * \
+                    __mminf32( fabsf(ClaState.Encoder1.MotSpeedHz), ClaState.Encoder1.bit2Rev  /  ClaState.Encoder1.DeltaT ) ;
+        }
+        else
+        {
+            ClaState.Encoder1.SpeedTime = ClaState.Encoder1.now ;
+        }
+    }
+    else
+    {
+        dpos = pos - ClaState.Encoder1.Pos ;
+        if ( dpos >= 0 )
+        {
+            sg = 1 ;
+        }
+        else
+        {
+            sg   = -1 ;
+            dpos = -dpos ;
+        }
+
+        if (ClaState.Encoder1.Stat & QEPSTS_CDEF_MASK )
+        { // Speed direction change occurred
+            ClaState.Encoder1.MotSpeedHz = 0 ;
+        }
+
+        CountTime =  ClaState.Encoder1.now - ( ClaState.Encoder1.TimeLat << 5 )  ; // Time of capture
+
+        if ( sg * ClaState.Encoder1.MotSpeedHz <= 0 )
+        {
+            ClaState.Encoder1.DeltaT = CUR_SAMPLE_TIME_USEC * 1e-6f ;
+            if ( dpos == 1 )
+            {
+                ClaState.Encoder1.MotSpeedHz = ClaState.Encoder1.MinMotSpeedHz * sg ;
+            }
+            else
+            {
+                ClaState.Encoder1.MotSpeedHz = ClaState.Encoder1.bit2Rev * (dpos-1) * sg / ClaState.Encoder1.DeltaT ;
+            }
+        }
+        else
+        {
+            ClaState.Encoder1.DeltaT = __mmaxf32( (float) (CountTime - ClaState.Encoder1.SpeedTime) * INV_CPU_CLK_HZ , 0.2f * CUR_SAMPLE_TIME_USEC*1e-6f);
+            ClaState.Encoder1.MotSpeedHz = dpos * ClaState.Encoder1.bit2Rev * sg  / ClaState.Encoder1.DeltaT ;
+        }
+        ClaState.Encoder1.SpeedTime = CountTime ;
+    }
+
+
+    // The motor position should count accurately as a revolution counter
+    lNext  = ClaState.Encoder1.MotorPosCnt + pos - ClaState.Encoder1.Pos ;
+    dlNext = lNext - ClaState.Encoder1.Rev2Bit ; // This writing is a CLA work around for flaw in integer comparison
+    if ( dlNext >= 0  )
+    {
+        lNext = dlNext  ;
+    }
+    if ( lNext < 0  )
+    {
+        lNext += ClaState.Encoder1.Rev2Bit ;
+    }
+    ClaState.Encoder1.MotorPosCnt =  lNext ;
+
+    ClaState.Encoder1.MotorPos = ClaState.Encoder1.MotorPosCnt * ClaState.Encoder1.bit2Rev  ;
+
+    ClaState.Encoder1.Pos = pos ;
+
+
+    up = ClaState.Encoder1.UserPos ;
+
+
+
+    ClaState.Encoder1.UserPos = ( pos -  ClaState.Encoder1.EncoderOnZero )  * ClaState.Encoder1.bit2Rev * ClaState.Encoder1.rev2Pos  ;
+    ClaState.Encoder1.UserPosDelta = ClaState.Encoder1.UserPos - up ;
+    ClaState.Encoder1.MotSpeedHzFilt  = ClaState.Encoder1.MotSpeedHzFilt + ClaControlPars.SpeedFilterCst * ( ClaState.Encoder1.MotSpeedHz - ClaState.Encoder1.MotSpeedHzFilt) ;
+    ClaState.Encoder1.UserSpeed = ClaState.Encoder1.MotSpeedHz * ClaState.Encoder1.rev2Pos ;
+}
+
+
+#undef ENCODER_BASE
+#define ENCODER_BASE EQEP2_BASE
+inline
+void ReadEncPosition2( void)
+{
+    long pos ;
+    float dpos ;
+    long CountTime   ;
+    long lNext , dlNext;
+    float sg ;
+    float up ;
+    short unsigned ctr ;
+
+    ctr = HWREGH(EPWM1_BASE + EPWM_O_TBCTR) ;
+    HWREG(ENCODER_BASE + EQEP_O_QUTMR) = (long unsigned) ctr ;
+    ClaState.Encoder2.Stat = HWREGH(ENCODER_BASE + EQEP_O_QEPSTS) ;
+    pos  = HWREG(ENCODER_BASE + EQEP_O_QPOSLAT) ;
+    ClaState.Encoder2.now =  HWREG (ECAP2_BASE + ECAP_O_TSCTR )  ; // CPUTIMER_O_TIM = 0
+    ClaState.Encoder2.TimeLat  = (long unsigned)HWREGH(ENCODER_BASE + EQEP_O_QCTMRLAT);
+    if ( ClaState.Encoder2.Stat & QEPSTS_CDEF_MASK)
+    { //If there was a change direction event, ok we note, and reset it
+        HWREGH(ENCODER_BASE + EQEP_O_QEPSTS) |= QEPSTS_CDEF_MASK ;
+    }
+
+    if ( ClaState.Encoder2.InvertEncoder )
+    {
+        pos = -pos ;
+    }
+
+    if ( ClaState.Encoder2.Pos == pos )
+    { // Nothing changed
+        if (ClaState.Encoder2.Stat & QEPSTS_CDEF_MASK )
+        {
+            ClaState.Encoder2.MotSpeedHz = 0 ;
+        }
+
+        ClaState.Encoder2.DeltaT = __mmaxf32( (float) (ClaState.Encoder2.now - ClaState.Encoder2.SpeedTime) * INV_CPU_CLK_HZ , CUR_SAMPLE_TIME_USEC*1e-6f);
+
+        if ( ClaState.Encoder2.DeltaT >  MAX_TIME_FOR_ZERO_SPEED)
+        {
+             ClaState.Encoder2.MotSpeedHz = 0 ;
+        }
+
+        if (ClaState.Encoder2.MotSpeedHz )
+        {
+            ClaState.Encoder2.MotSpeedHz = (ClaState.Encoder2.MotSpeedHz>=0?1:-1) * \
+                    __mminf32( fabsf(ClaState.Encoder2.MotSpeedHz), ClaState.Encoder2.bit2Rev  /  ClaState.Encoder2.DeltaT ) ;
+        }
+        else
+        {
+            ClaState.Encoder2.SpeedTime = ClaState.Encoder2.now ;
+        }
+    }
+    else
+    {
+        dpos = pos - ClaState.Encoder2.Pos ;
+        if ( dpos >= 0 )
+        {
+            sg = 1 ;
+        }
+        else
+        {
+            sg   = -1 ;
+            dpos = -dpos ;
+        }
+
+        if (ClaState.Encoder2.Stat & QEPSTS_CDEF_MASK )
+        { // Speed direction change occurred
+            ClaState.Encoder2.MotSpeedHz = 0 ;
+        }
+
+        CountTime =  ClaState.Encoder2.now - ( ClaState.Encoder2.TimeLat << 5 )  ; // Time of capture
+
+        if ( sg * ClaState.Encoder2.MotSpeedHz <= 0 )
+        {
+            ClaState.Encoder2.DeltaT = CUR_SAMPLE_TIME_USEC * 1e-6f ;
+            if ( dpos == 1 )
+            {
+                ClaState.Encoder2.MotSpeedHz = ClaState.Encoder2.MinMotSpeedHz * sg ;
+            }
+            else
+            {
+                ClaState.Encoder2.MotSpeedHz = ClaState.Encoder2.bit2Rev * (dpos-1) * sg / ClaState.Encoder2.DeltaT ;
+            }
+        }
+        else
+        {
+            ClaState.Encoder2.DeltaT = __mmaxf32( (float) (CountTime - ClaState.Encoder2.SpeedTime) * INV_CPU_CLK_HZ , 0.2f * CUR_SAMPLE_TIME_USEC*1e-6f);
+            ClaState.Encoder2.MotSpeedHz = dpos * ClaState.Encoder2.bit2Rev * sg  / ClaState.Encoder2.DeltaT ;
+        }
+        ClaState.Encoder2.SpeedTime = CountTime ;
+    }
+
+
+    // The motor position should count accurately as a revolution counter
+    lNext  = ClaState.Encoder2.MotorPosCnt + pos - ClaState.Encoder2.Pos ;
+    dlNext = lNext - ClaState.Encoder2.Rev2Bit ; // This writing is a CLA work around for flaw in integer comparison
+    if ( dlNext >= 0  )
+    {
+        lNext = dlNext  ;
+    }
+    if ( lNext < 0  )
+    {
+        lNext += ClaState.Encoder2.Rev2Bit ;
+    }
+    ClaState.Encoder2.MotorPosCnt =  lNext ;
+
+    ClaState.Encoder2.MotorPos = ClaState.Encoder2.MotorPosCnt * ClaState.Encoder2.bit2Rev  ;
+
+    ClaState.Encoder2.Pos = pos ;
+
+
+    up = ClaState.Encoder2.UserPos ;
+
+
+
+    ClaState.Encoder2.UserPos = ( pos -  ClaState.Encoder2.EncoderOnZero )  * ClaState.Encoder2.bit2Rev * ClaState.Encoder2.rev2Pos  ;
+    ClaState.Encoder2.UserPosDelta = ClaState.Encoder2.UserPos - up ;
+    ClaState.Encoder2.MotSpeedHzFilt  = ClaState.Encoder2.MotSpeedHzFilt + ClaControlPars.SpeedFilterCst * ( ClaState.Encoder2.MotSpeedHz - ClaState.Encoder2.MotSpeedHzFilt) ;
+    ClaState.Encoder2.UserSpeed = ClaState.Encoder2.MotSpeedHz * ClaState.Encoder2.rev2Pos ;
+
+}
+
+void inline ClaReadAdc(void)
+{
+    float InvRef ;
+    ClaState.Analogs.RailSensor = HWREGH(ADCARESULT_BASE+ADC_O_RESULT0) * 8.3008e-04f;
+    ClaState.Analogs.PotentiometerRef = HWREGH(ADCBRESULT_BASE+ADC_O_RESULT0) * 8.3008e-04f * 2  ;
+    ClaState.Analogs.Pot1 = HWREGH(ADCCRESULT_BASE+ADC_O_RESULT0) * 8.3008e-04f ;
+    ClaState.Analogs.ID = HWREGH(ADCARESULT_BASE+ADC_O_RESULT1) * 8.0566e-04f;
+    ClaState.Analogs.BrakeVolts = HWREGH(ADCBRESULT_BASE+ADC_O_RESULT1) * (8.0566e-04f * BrakeAdcGain) ;
+
+
+
+
+    if ( ClaState.Analogs.PotentiometerRef < ClaControlPars.MinPotRef )
+    {
+        if ( ClaState.Pot.RefFailCnt < 200 )
+        {
+            ClaState.Pot.RefFailCnt += 1 ;
+        }
+        else
+        {
+            ClaMailOut.PotRefFail = 1 ;
+        }
+    }
+    else
+    {
+        InvRef = 1.0f / ClaState.Analogs.PotentiometerRef ;
+        ClaMailOut.PotRefFail = 0 ;
+        ClaState.Pot.PotRat = InvRef * ClaState.Analogs.Pot1 ;
+        ClaState.Pot.PotFilt = ClaState.Pot.PotFilt  + ClaControlPars.PotFilterCst * ( ClaState.Pot.PotRat - ClaState.Pot.PotFilt ) ;
+        ClaState.Pot.PotUser = __mmaxf32 ( __mminf32( (ClaState.Pot.PotFilt - Calib.PotCenter ) * ( 1 + Calib.PotGainFac ) , 1.0f) , 0.0f)  ;
+    }
+
+}
+
+
+
+inline
+void DealRailSenor(void)
+{
+    float state ;
+    float delta , absdist , dist;
+    ClaState.Filt.IndSenWL = ClaState.Filt.IndSenWL + ClaControlPars.RailSenseFilterCst * ( ClaState.Analogs.RailSensor - ClaState.Filt.IndSenWL ) ;
+
+    ClaState.LLimit.ValuePNP =  ( (ClaState.Filt.IndSenWL > ClaControlPars.RailSensorPNPThold ) ? 1.0f : 0.0f ) ;
+    ClaState.LLimit.ValueNPN =  ( (ClaState.Filt.IndSenWL < ClaControlPars.RailSensorNPNThold ) ? 1.0f : 0.0f ) ;
+    state = ( ClaControlPars.IsRailSensorPNP ) ? ClaState.LLimit.ValuePNP : ClaState.LLimit.ValueNPN ;
+
+    //LEncoder = ClaState.Encoder3.UserPos ;
+    if ( state - ClaState.LLimit.PresentValue  )
+    { // Change detected
+        if ( state )
+        { // Set to high
+            if (ClaState.LLimit.RiseMarker == 0 )
+            {
+                ClaState.LLimit.CaptEncoderH = ClaState.Encoder3.Pos ;
+                ClaState.LLimit.RiseMarker = 1 ;
+            }
+        }
+        else
+        { // Set to low
+            if ( ClaState.LLimit.RiseMarker )
+            {
+                ClaState.LLimit.CaptEncoderL =  ClaState.Encoder3.Pos ;
+                ClaState.LLimit.FallMarker = 1 ;
+            }
+        }
+    }
+    ClaState.LLimit.PresentValue = state ;
+
+    if ( ClaState.LLimit.RiseMarker )
+    {// 1.525878906250000e-05  is  2^(-16)
+        delta =  (float) (ClaState.Encoder3.Pos - ClaState.LLimit.CaptEncoderH ) ;
+        if ( fabsf( (float)delta * ClaControlPars.Enc2MeterShelf)  > ClaMailIn.MaxSwitchLengthEffective )
+        { // An error - switch lasts too much
+            ClaState.LLimit.RiseMarker = 0 ;
+            ClaState.LLimit.FallMarker = 0 ;
+        }
+    }
+
+    if ( ( 1.0f - ClaState.LLimit.PresentValue ) * ClaState.LLimit.RiseMarker * ClaState.LLimit.FallMarker  > 0.5f)
+    { // Now switch is low and both markers exist
+        delta = (float) (ClaState.LLimit.CaptEncoderL - ClaState.LLimit.CaptEncoderH )  ;
+
+        dist = delta* ClaControlPars.Enc2MeterShelf;
+        absdist = fabsf( dist) ;
+
+        // If switch length is between minimum and maximum
+        if ( absdist >= ClaMailIn.MinSwitchLengthEffective )
+        {
+            ClaState.LLimit.RiseMarker = 0 ;
+            ClaState.LLimit.FallMarker = 0 ;
+            if  ( absdist < ClaMailIn.MaxSwitchLengthEffective )
+            {
+                ClaState.LLimit.DetectWidthRaw = dist ;
+                ClaState.LLimit.EncoderAtSwitch =  ClaState.LLimit.CaptEncoderH + (long)(delta  * 0.5f) ;
+                ClaState.LLimit.SwitchDetectValid += 1 ;
+                ClaState.LLimit.SwitchDir = (dist > 0) ? 1.0f : -1.0f ;
+                ClaState.LLimit.SwitchWidth = absdist ;
+            }
+         }
+        else
+        {
+            ClaState.LLimit.RiseMarker = 0 ;
+            ClaState.LLimit.FallMarker = 0 ;
+        }
+    }
+
+    if ( ClaState.LLimit.RiseMarker )
+    {
+        ClaState.LLimit.DistIntoSwitch =
+                __mmaxf32 (
+                __mminf32 ( (ClaState.Encoder3.Pos - ClaState.LLimit.CaptEncoderH ) * ClaControlPars.Enc2MeterShelf ,ClaMailIn.MaxSwitchLengthEffective)
+                ,-ClaMailIn.MaxSwitchLengthEffective);
+    }
+}
+
+
+
+/* This interrupt is by ADC EOC
+ * It reads all the sensors and prepares them for delivery
+ */
+__attribute__((interrupt)) void Cla1Task1 ( void )
+{
+
+    if ( ClaState.DebugStop == 1.0f )
+    {
+        __mdebugstop() ;
+    }
+
+    //Reset the CLB FIFO both push and pull before the read
+    HWREG(CLB1_BASE + CLB_LOGICCTL + CLB_O_BUF_PTR) = 0U;
+
+    // Read encoder 3, assuming HLC pushed twice
+    HWREG(CLB1_BASE + CLB_LOGICCTL + CLB_O_GP_REG) = 0x10   ;
+    HWREG(CLB1_BASE + CLB_LOGICCTL + CLB_O_GP_REG) = 0    ;
+
+    ClaReadAdc() ;
+    ReadEncPosition1() ;
+    ReadEncPosition2() ;
+
+    ClaState.Encoder3.Pos = HWREG(CLB1_BASE + CLB_DATAEXCH + CLB_O_PUSH(0)) ;
+    //ClaState.Encoder3.TimeLat = HWREG(CLB1_BASE + CLB_DATAEXCH + CLB_O_PUSH(1)) ;
+    // This is a wheel encoder, so we read it modulo
+    ClaState.Encoder3.UserPos = __mfracf32(__mfracf32(
+            ( ClaState.Encoder3.Pos -  ClaState.Encoder3.EncoderOnZero ) * (ClaControlPars.InvEncoderWhCountsFullRev) + 1 )  )  ;
+
+    // Calculate the middle of traverse positioning tabs
+    DealRailSenor() ;
+
+    if ( ( ClaState.LLimit.SwitchDetectValid != ClaMailOut.SwitchDetectValid )  )
+    {
+        ClaMailOut.SwUpdateFlag |= 1 ;
+
+        ClaMailOut.SwitchDetectValid = ClaState.LLimit.SwitchDetectValid ;
+        ClaMailOut.EncoderAtSwitch= ClaState.LLimit.EncoderAtSwitch ;
+        ClaMailOut.SwitchDir= ClaState.LLimit.SwitchDir ;
+        ClaMailOut.SwitchWidth= ClaState.LLimit.SwitchWidth ;
+
+        ClaMailOut.SwUpdateFlag += 1 ;
+    }
+
+    ClaState.LLimit.SwitchSummary = ClaState.LLimit.PresentValue +  ClaState.LLimit.ValuePNP * 2 +  ClaState.LLimit.ValueNPN * 4 +
+            ClaState.LLimit.RiseMarker * 8 +
+            ClaState.LLimit.FallMarker * 16 + ( ClaState.LLimit.SwitchDir + 1.0f ) * 32 +
+            (float)( ClaState.LLimit.SwitchDetectValid & 0xff ) * 256.0f ;
+
+    ClaMailOut.IntCntr += 1  ;
+
+}
+
+__attribute__((interrupt)) void Cla1Task2 ( void )
+{
+
+}
+
+__attribute__((interrupt)) void Cla1Task3 ( void )
+{
+
+}
+
+__attribute__((interrupt)) void Cla1Task8 ( void )
+{
+    ClaMailOut.AbortCounter = 0 ;
+    ClaMailOut.AbortReason = 0 ;
+    ClaMailOut.PotRefFail = 0 ;
+    ClaMailOut.IntCntr = 0 ;
+}

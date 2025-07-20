@@ -1,0 +1,77 @@
+/*
+ * BlTimerAlloc.h
+ *
+ *  Created on: Aug 17, 2021
+ *      Author: Yahali
+ */
+
+#ifndef APPLICATION_BLTIMERALLOC_H_
+#define APPLICATION_BLTIMERALLOC_H_
+
+
+/*
+ * TimerAlloc.h
+ *
+ *  Created on: Dec 23, 2016
+ *      Author: Yahali Theodor
+ */
+
+#ifndef APPLICATION_LPTIMERALLOC_H_
+#define APPLICATION_LPTIMERALLOC_H_
+
+
+
+// Timers
+// These timers codes are reserved, DO NOT change
+#define TIMER_ARR_STAM_WAIT_IDLE 0 // Reserved
+#define TIMER_ARR_RESET_BOOTUP  1  // Reserved
+#define TIMER_ARR_RESET_TOTAL_BOOTUP  2 // Reserved
+
+// General use timers
+#define TIMER_ARR_GEN_WAIT_CAN_MGR  3
+#define TIMER_I2C_TLC_TRANSMIT 4
+#define TIMER_GYRO_MNG 5
+#define TIMER_INACC 6
+#define TIMER_INROT 7
+#define TIMER_AUTO_WAIT 8
+#define TIMER_AUTO_WAIT_1 9
+#define TIMER_LASER_ON 10
+#define TIMER_WAIT_PS 11
+#define TIMER_PS_MNGR_PERIOD 12
+#define TIMER_GYRO_RESET 14
+#define TIMER_RAIL_CONTACT_FIND 15
+#define TIMER_NECK_STRETCH_ALARM 16
+#define TIMER_STATUS_TX 17
+
+#define TIMER_BRAKE_DELAY_4_SHELF  18
+#define TIMER_STABILIZE_FOR_TWIST  19
+#define TIMER_INMOT 20
+#define TIMER_PACK_ACTION_TMR 21
+#define TIMER_CRAB_ACTION 22
+#define TIMER_GEN_TIME_ACTION 23
+#define TIMER_POT_PROBLEM 24
+#define TIMER_DYNAMIXEL_PROBLEM 25
+#define TIMER_MANIPULATOR_STANDBY 26
+#define TIMER_POS_STABILIZATION_POLE 27
+#define TIMER_MANPACK_ACTION_TMR 28
+#define TIMER_PACK_MON_HELPER 29
+#define TIMER_PACK_MON_HELPER2 30
+#define TIMER_PD_DATA_RX_TOUT 31
+#define TIMER_GP_SHELF 32
+#define TIMER_DELAYED_MOFF_ON_FAULT 33
+#define TIMER_BRAKE_ENGAGE 34
+#define TIMER_I_SLEEP_LET_ME_SNORE 35
+#define TIMER_BIT 36
+#define TIMER_IN_PACK_EXIT 37
+#define TIMER_WHEELS_MOVING 38
+#define TIMER_PRESLEEP 39
+#define TIMER_MAN_CMD_TOUT 40
+#define TIMER_SHUTCAN_BLINK 41
+
+#define TIMER_BOOT_ADC 42
+
+#endif /* APPLICATION_LPTIMERALLOC_H_ */
+
+
+
+#endif /* APPLICATION_BLTIMERALLOC_H_ */

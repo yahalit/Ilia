@@ -1,0 +1,6 @@
+put 6.1.6 compiler into  ${CG_TOOL_ROOT} e.g. 
+C:\ti\CCV5p5\ccsv5\tools\compiler\c2000_6_1_6\
+
+HEX2000_PATH
+${CG_TOOL_ROOT}\bin\
+

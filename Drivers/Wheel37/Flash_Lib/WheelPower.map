@@ -1,0 +1,1969 @@
+******************************************************************************
+             TMS320C2000 Linker PC v22.6.1                     
+******************************************************************************
+>> Linked Thu Oct 31 15:07:56 2024
+
+OUTPUT FILE NAME:   <WheelPower.out>
+ENTRY POINT SYMBOL: "code_start"  address: 00083000
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  BOOT_RSVD             00000002   00000126  00000000  00000126  RWIX
+  RAMM0                 00000128   000002d8  00000000  000002d8  RWIX
+  RAMM1                 00000400   000003f8  00000100  000002f8  RWIX
+  ADCARESULT            00000b00   00000018  00000000  00000018  RWIX
+  ADCBRESULT            00000b20   00000018  00000000  00000018  RWIX
+  ADCCRESULT            00000b40   00000018  00000000  00000018  RWIX
+  CPUTIMER0             00000c00   00000008  00000000  00000008  RWIX
+  CPUTIMER1             00000c08   00000008  00000000  00000008  RWIX
+  CPUTIMER2             00000c10   00000008  00000000  00000008  RWIX
+  PIECTRL               00000ce0   0000001a  00000000  0000001a  RWIX
+  PIEVECTTABLE          00000d00   00000200  00000000  00000200  RWIX
+  DMA                   00001000   00000200  00000000  00000200  RWIX
+  CLA1                  00001400   00000080  00000000  00000080  RWIX
+  CLA1_MSGRAMLOW        00001480   00000080  00000014  0000006c  RWIX
+  CLA1_MSGRAMHIGH       00001500   00000080  00000042  0000003e  RWIX
+  CLB1LOGICCFG          00003000   00000052  00000000  00000052  RWIX
+  CLB1LOGICCTRL         00003100   00000040  00000000  00000040  RWIX
+  CLB1DATAEXCH          00003180   00000080  00000000  00000080  RWIX
+  CLB2LOGICCFG          00003400   00000052  00000000  00000052  RWIX
+  CLB2LOGICCTRL         00003500   00000040  00000000  00000040  RWIX
+  CLB2DATAEXCH          00003580   00000080  00000000  00000080  RWIX
+  CLB3LOGICCFG          00003800   00000052  00000000  00000052  RWIX
+  CLB3LOGICCTRL         00003900   00000040  00000000  00000040  RWIX
+  CLB3DATAEXCH          00003980   00000080  00000000  00000080  RWIX
+  CLB4LOGICCFG          00003c00   00000052  00000000  00000052  RWIX
+  CLB4LOGICCTRL         00003d00   00000040  00000000  00000040  RWIX
+  CLB4DATAEXCH          00003d80   00000080  00000000  00000080  RWIX
+  EPWM1                 00004000   00000100  00000000  00000100  RWIX
+  EPWM2                 00004100   00000100  00000000  00000100  RWIX
+  EPWM3                 00004200   00000100  00000000  00000100  RWIX
+  EPWM4                 00004300   00000100  00000000  00000100  RWIX
+  EPWM5                 00004400   00000100  00000000  00000100  RWIX
+  EPWM6                 00004500   00000100  00000000  00000100  RWIX
+  EPWM7                 00004600   00000100  00000000  00000100  RWIX
+  EPWM8                 00004700   00000100  00000000  00000100  RWIX
+  EQEP1                 00005100   00000040  00000000  00000040  RWIX
+  EQEP2                 00005140   00000040  00000000  00000040  RWIX
+  ECAP1                 00005200   00000020  00000000  00000020  RWIX
+  ECAP2                 00005240   00000020  00000000  00000020  RWIX
+  ECAP3                 00005280   00000020  00000000  00000020  RWIX
+  HRCAP3                000052a0   00000020  00000000  00000020  RWIX
+  DACA                  00005c00   00000008  00000000  00000008  RWIX
+  DACB                  00005c10   00000008  00000000  00000008  RWIX
+  CMPSS1                00005c80   00000020  00000000  00000020  RWIX
+  CMPSS2                00005ca0   00000020  00000000  00000020  RWIX
+  CMPSS3                00005cc0   00000020  00000000  00000020  RWIX
+  CMPSS4                00005ce0   00000020  00000000  00000020  RWIX
+  SDFM1                 00005e00   00000080  00000000  00000080  RWIX
+  SDFM2                 00005e80   00000080  00000000  00000080  RWIX
+  SPIA                  00006100   00000010  00000000  00000010  RWIX
+  SPIB                  00006110   00000010  00000000  00000010  RWIX
+  BGCRCCPU              00006340   00000040  00000000  00000040  RWIX
+  BGCRCCLA1             00006380   00000040  00000000  00000040  RWIX
+  PMBUSA                00006400   00000020  00000000  00000020  RWIX
+  HIC                   00006500   00000080  00000000  00000080  RWIX
+  FSITXA                00006600   00000050  00000000  00000050  RWIX
+  FSIRXA                00006680   00000050  00000000  00000050  RWIX
+  LINA                  00006a00   000000ec  00000000  000000ec  RWIX
+  LINB                  00006b00   000000ec  00000000  000000ec  RWIX
+  WD                    00007000   0000002c  00000000  0000002c  RWIX
+  NMIINTRUPT            00007060   00000010  00000000  00000010  RWIX
+  XINT                  00007070   0000000c  00000000  0000000c  RWIX
+  SCIA                  00007200   00000010  00000000  00000010  RWIX
+  SCIB                  00007210   00000010  00000000  00000010  RWIX
+  I2CA                  00007300   00000022  00000000  00000022  RWIX
+  I2CB                  00007340   00000022  00000000  00000022  RWIX
+  ADCA                  00007400   00000080  00000000  00000080  RWIX
+  ADCB                  00007480   00000080  00000000  00000080  RWIX
+  ADCC                  00007500   00000080  00000000  00000080  RWIX
+  INPUTXBAR             00007900   00000020  00000000  00000020  RWIX
+  XBAR                  00007920   00000020  00000000  00000020  RWIX
+  SYNCSOC               00007940   00000006  00000000  00000006  RWIX
+  CLBINPUTXBAR          00007960   00000020  00000000  00000020  RWIX
+  DMACLASRCSEL          00007980   0000001a  00000000  0000001a  RWIX
+  EPWMXBAR              00007a00   00000040  00000000  00000040  RWIX
+  CLBXBAR               00007a40   00000040  00000000  00000040  RWIX
+  OUTPUTXBAR            00007a80   00000040  00000000  00000040  RWIX
+  CLBOUTPUTXBAR         00007bc0   00000040  00000000  00000040  RWIX
+  GPIOCTRL              00007c00   00000200  00000000  00000200  RWIX
+  GPIODATA              00007f00   00000040  00000000  00000040  RWIX
+  GPIODATAREAD          00007f80   00000010  00000000  00000010  RWIX
+  LFU                   00007fe0   00000020  00000000  00000020  RWIX
+  RAMCLAPROG            00008000   00001000  00000b62  0000049e  RWIX
+  RAMCLADATA            00009000   00000800  0000020c  000005f4  RWIX
+  RAMLSNonCla           00009800   00002800  000018ac  00000f54  RWIX
+  RAMGS0to3             0000c000   00003ff8  00002084  00001f74  RWIX
+  CANA                  00048000   00000200  00000000  00000200  RWIX
+  MCANSS                0005c400   00000016  00000000  00000016  RWIX
+  MCAN                  0005c600   00000080  00000000  00000080  RWIX
+  MCANERROR             0005c800   00000108  00000000  00000108  RWIX
+  DEVCFG                0005d000   000001b0  00000000  000001b0  RWIX
+  CLKCFG                0005d200   00000100  00000000  00000100  RWIX
+  CPUSYS                0005d300   000000a0  00000000  000000a0  RWIX
+  SYSSTATUS             0005d400   00000040  00000000  00000040  RWIX
+  PERIPHAC              0005d500   00000200  00000000  00000200  RWIX
+  ANALOGSUBSYS          0005d700   00000122  00000000  00000122  RWIX
+  DCC0                  0005e700   00000038  00000000  00000038  RWIX
+  DCC1                  0005e740   00000038  00000000  00000038  RWIX
+  ERADGLOBAL            0005e800   00000014  00000000  00000014  RWIX
+  ERADHWBP1             0005e900   00000008  00000000  00000008  RWIX
+  ERADHWBP2             0005e908   00000008  00000000  00000008  RWIX
+  ERADHWBP3             0005e910   00000008  00000000  00000008  RWIX
+  ERADHWBP4             0005e918   00000008  00000000  00000008  RWIX
+  ERADHWBP5             0005e920   00000008  00000000  00000008  RWIX
+  ERADHWBP6             0005e928   00000008  00000000  00000008  RWIX
+  ERADHWBP7             0005e930   00000008  00000000  00000008  RWIX
+  ERADHWBP8             0005e938   00000008  00000000  00000008  RWIX
+  ERADCOUNTER1          0005e980   00000010  00000000  00000010  RWIX
+  ERADCOUNTER2          0005e990   00000010  00000000  00000010  RWIX
+  ERADCOUNTER3          0005e9a0   00000010  00000000  00000010  RWIX
+  ERADCOUNTER4          0005e9b0   00000010  00000000  00000010  RWIX
+  ERADCRCGLOBAL         0005ea00   00000010  00000000  00000010  RWIX
+  ERADCRC1              0005ea10   00000010  00000000  00000010  RWIX
+  ERADCRC2              0005ea20   00000010  00000000  00000010  RWIX
+  ERADCRC3              0005ea30   00000010  00000000  00000010  RWIX
+  ERADCRC4              0005ea40   00000010  00000000  00000010  RWIX
+  ERADCRC5              0005ea50   00000010  00000000  00000010  RWIX
+  ERADCRC6              0005ea60   00000010  00000000  00000010  RWIX
+  ERADCRC7              0005ea70   00000010  00000000  00000010  RWIX
+  ERADCRC8              0005ea80   00000010  00000000  00000010  RWIX
+  EPG1                  0005ec00   00000050  00000000  00000050  RWIX
+  EPG1MUX               0005ecd0   00000010  00000000  00000010  RWIX
+  DCSMZ1                0005f000   0000003e  00000000  0000003e  RWIX
+  DCSMZ2                0005f080   0000003e  00000000  0000003e  RWIX
+  DCSMCOMMON            0005f0c0   00000020  00000000  00000020  RWIX
+  MEMCFG                0005f400   000000c0  00000000  000000c0  RWIX
+  ACCESSPROTECTION      0005f500   00000040  00000000  00000040  RWIX
+  MEMORYERROR           0005f540   00000040  00000000  00000040  RWIX
+  TESTERROR             0005f590   00000010  00000000  00000010  RWIX
+  FLASH0CTRL            0005f800   00000182  00000000  00000182  RWIX
+  FLASH0ECC             0005fb00   00000028  00000000  00000028  RWIX
+  DCSMZ1OTP             00078000   00000020  00000000  00000020  RWIX
+  DCSMZ2OTP             00078200   00000020  00000000  00000020  RWIX
+  BEGIN                 00083000   00000002  00000002  00000000  RWIX
+  FLASH_BANK0_SEC0      00083002   00000ffe  00000fd8  00000026  RWIX
+  FLASH_BANK0_SEC1      00084000   00001000  00000bc2  0000043e  RWIX
+  FLASH_BANK0_SEC4AndNe 00085000   0000b000  00007a35  000035cb  RWIX
+  FLASH_BANK1_SEC0      00090000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC1      00091000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC2      00092000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC3      00093000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC4      00094000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC5      00095000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC6      00096000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC7      00097000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC8      00098000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC9      00099000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC10     0009a000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC11     0009b000   00001000  00000000  00001000  RWIX
+  FLASH_BANK1_SEC12a    0009c000   00000400  00000000  00000400  RWIX
+  FLASH_BANK1_SEC12b    0009c400   00000c00  00000000  00000c00  RWIX
+  FLASH_BANK1_SEC13a    0009d000   00000100  00000000  00000100  RWIX
+  FLASH_BANK1_SEC13b    0009d100   00000f00  00000000  00000f00  RWIX
+  FLASH_BANK1_SEC14a    0009e000   00000100  00000000  00000100  RWIX
+  FLASH_BANK1_SEC14b    0009e100   00000f00  00000000  00000f00  RWIX
+  FLASH_BANK1_SEC15a    0009f000   00000004  00000004  00000000  RWIX
+  FLASH_BANK1_SEC15b    0009f004   00000ffc  00000000  00000ffc  RWIX
+  SECURE_ROM            003f2000   00006000  00000000  00006000  RWIX
+  BOOTROM               003f8000   00007fc0  00000000  00007fc0  RWIX
+  RESET                 003fffc0   00000002  00000000  00000002  RWIX
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+codestart 
+*          0    00083000    00000002     
+                  00083000    00000002     f28003x_codestartbranch.obj (codestart)
+
+.switch    0    00083ec0    00000036     
+                  00083ec0    00000036     ObjectDict.obj (.switch:SetMiscTest)
+
+.cinit     0    00083ef8    000000ec     
+                  00083ef8    000000aa     (.cinit..data.load) [load image]
+                  00083fa2    00000006     (__TI_handler_table)
+                  00083fa8    00000004     (.cinit..bss.load) [load image, compression = zero_init]
+                  00083fac    00000004     (.cinit..bss_cla.load) [load image, compression = zero_init]
+                  00083fb0    00000004     (.cinit..scratchpad.load) [load image, compression = zero_init]
+                  00083fb4    00000004     (.cinit.Cla1ToCpuMsgRAM.load) [load image, compression = zero_init]
+                  00083fb8    00000004     (.cinit.CpuToCla1MsgRAM.load) [load image, compression = zero_init]
+                  00083fbc    00000004     (.cinit.cla_shared.load) [load image, compression = zero_init]
+                  00083fc0    00000004     (.cinit.ramgs0to3.load) [load image, compression = zero_init]
+                  00083fc4    00000020     (__TI_cinit_table)
+
+.text      0    00085c88    00006dad     
+                  00085c88    00000327     FsiDrv.obj (.text:FsiRtService)
+                  00085faf    00000313     BuiltInTest.obj (.text:IdleCbit)
+                  000862c2    000002e5     CanSlave.obj (.text:CanSlave)
+                  000865a7    000002c9     Controller.obj (.text:MotorOnSeq)
+                  00086870    0000023d     Recorder.obj (.text:GetRecorder)
+                  00086aad    00000223     ObjectDict.obj (.text:SetMiscTest)
+                  00086cd0    000001fb     PrjMCAN.obj (.text:RtCanService)
+                  00086ecb    000001f4     MainApp.obj (.text:SetProjectSpecificData)
+                  000870bf    000001e5     MainApp.obj (.text:InitControlParams)
+                  000872a4    000001e2     Homing.obj (.text:HomeProfiler)
+                  00087486    000001aa     Controller.obj (.text:GetSpeedCmdForPerr)
+                  00087630    00000184     MainApp.obj (.text:InitControlFilter)
+                  000877b4    00000169     Recorder.obj (.text:SetRecorder)
+                  0008791d    00000167     TrapezeProfiler.obj (.text:AdvanceProfiler)
+                  00087a84    0000015e     PTDriverSimple.obj (.text:PTRunTimeDriver)
+                  00087be2    00000147     PinMux.obj (.text:setupGpio)
+                  00087d29    0000013e     Commutation.obj (.text:GetCommAnglePu)
+                  00087e67    00000136     ObjectDict.obj (.text:SetCalibCmd)
+                  00087f9d    00000133     AdcIsr.obj (.text:AdcIsr)
+                  000880d0    0000011f     Commutation.obj (.text:GetHallComm)
+                  000881ef    0000011f     ObjectDict.obj (.text:SetParamCmd)
+                  0008830e    0000010b     Controller.obj (.text:MotorOffSeq)
+                  00088419    00000109     MainApp.obj (.text:InitAppData)
+                  00088522    00000108     ObjectDict.obj (.text:GetMiscTest)
+                  0008862a    00000108     sysctl.obj (.text:SysCtl_setClock)
+                  00088732    00000103     Testing.obj (.text:CF_sumCorr)
+                  00088835    000000fd     sysctl.obj (.text:SysCtl_isPLLValid)
+                  00088932    000000f9     Controller.obj (.text:SetMotorOn)
+                  00088a2b    000000f0     Recorder.obj (.text:ActivateProgrammedRecorder)
+                  00088b1b    000000ec     Testing.obj (.text:RefGen)
+                  00088c07    000000eb     PrjMCAN.obj (.text:RTDealBlockUpload)
+                  00088cf2    000000ea     ObjectDict.obj (.text:SetMotionPar)
+                  00088ddc    000000cc     Controller.obj (.text:DecodeBhCW)
+                  00088ea8    000000c9     Adc.obj (.text:SetupADCs)
+                  00088f71    000000c8     ObjectDict.obj (.text:SetIdentityCmd)
+                  00089039    000000c6     MainApp.obj (.text:ApplyIdentity)
+                  000890ff    000000b1     FsiDrv.obj (.text:Timer0Interrupt)
+                  000891b0    000000b0     Testing.obj (.text:CF_sumCorr2)
+                  00089260    000000af     Testing.obj (.text:CF_StartTime)
+                  0008930f    000000ab     ObjectDict.obj (.text:SetFwCmd)
+                  000893ba    000000a7     CanSlave.obj (.text:AddSdo2Buf)
+                  00089461    000000a2     Controller.obj (.text:SetReferenceMode)
+                  00089503    0000009e     BuiltInTest.obj (.text:PosManageAutomaticBrakeEngage)
+                  000895a1    00000095     PosPrefilter.obj (.text)
+                  00089636    00000094     dma.obj (.text:DMA_configMode)
+                  000896ca    0000008f     EncDrive.obj (.text:ProcessEncoderData)
+                  00089759    0000008f     MainApp.obj (.text:SetSystemMode)
+                  000897e8    00000089     LowLevel.obj (.text:SetupPeripheralClks)
+                  00089871    00000088     BuiltInTest.obj (.text:LogException)
+                  000898f9    00000087     PrjMCAN.obj (.text:DealBlockDloadRt)
+                  00089980    00000087     ObjectDict.obj (.text:SetConfigPar)
+                  00089a07    00000082     Controller.obj (.text:GetCurrentCmdForSpeedErr)
+                  00089a89    00000082     PwmDrive.obj (.text:SetupPWM)
+                  00089b0b    00000081     Controller.obj (.text:DecodeBhCmdValue)
+                  00089b8c    0000007e     ObjectDict.obj (.text:GetIdentityCmd)
+                  00089c0a    0000007d     BuiltInTest.obj (.text:TestEncoderMatching)
+                  00089c87    00000079     interrupt.obj (.text:Interrupt_clearIFR)
+                  00089d00    00000078     ObjectDict.obj (.text:SetDynIdentification)
+                  00089d78    00000077     PwmDrive.obj (.text:SetupPwmPacer)
+                  00089def    00000076     Controller.obj (.text:SetLoopClosureMode)
+                  00089e65    00000076     CanSlave.obj (.text:SlaveSdoUploadSegmented)
+                  00089edb    00000076     LinDrv.obj (.text:setupDMA)
+                  00089f51    00000075     IdleLoop.obj (.text:IdleLoop)
+                  00089fc6    00000075     PwmDrive.obj (.text:setupPwmParams)
+                  0008a03b    00000072     BuiltInTest.obj (.text:ManageBrakeEngage)
+                  0008a0ad    0000006e     Controller.obj (.text:StepFilt)
+                  0008a11b    0000006b     LowLevel.obj (.text:EPWM_setADCTriggerSource)
+                  0008a186    0000006b     Controller.obj (.text:PosPrefilterMotorOn)
+                  0008a1f1    00000068     lin.obj (.text:LIN_initModule)
+                  0008a259    00000068     LowLevel.obj (.text:SetupIsr)
+                  0008a2c1    00000067     PrjMCAN.obj (.text:SetMsg2HW)
+                  0008a328    00000063     Recorder.obj (.text:SetSignal)
+                  0008a38b    00000060     PrjMCAN.obj (.text:BlockUploadConfirmService)
+                  0008a3eb    00000060     Homing.obj (.text:InitHomingProc)
+                  0008a44b    0000005f     BuiltInTest.obj (.text:ManageAutomaticBrakeEngage)
+                  0008a4aa    0000005f     LinDrv.obj (.text:UartService)
+                  0008a509    0000005e     PwmDrive.obj (.text:setupSync)
+                  0008a567    0000005d     Recorder.obj (.text:GetSignal)
+                  0008a5c4    0000005c     Recorder.obj (.text:RtRecorder)
+                  0008a620    0000005b     LowLevel.obj (.text:InitPeripherals)
+                  0008a67b    0000005a     TrapezeProfiler.obj (.text:ProfileToStop)
+                  0008a6d5    0000005a     PinMux.obj (.text:SetAdcMux)
+                  0008a72f    00000058     ObjectDict.obj (.text:SetOperationMode)
+                  0008a787    00000058     Adc.obj (.text:setupCMPSSs)
+                  0008a7df    00000057     Controller.obj (.text:MotorHoldSeq)
+                  0008a836    00000056     PrjMCAN.obj (.text:EarlyRefDecode)
+                  0008a88c    00000052     MainApp.obj (.text:ReadCalibFromFlash)
+                  0008a8de    00000052     LowLevel.obj (.text:SetupTimers)
+                  0008a930    00000052     Controller.obj (.text:Steering2WheelCorrection)
+                  0008a982    0000004f     MainApp.obj (.text:SetMotionCommandLimits)
+                  0008a9d1    0000004e     ObjectDict.obj (.text:GetFwCmd)
+                  0008aa1f    0000004e     interrupt.obj (.text:Interrupt_disable)
+                  0008aa6d    0000004e     ObjectDict.obj (.text:SetShortData)
+                  0008aabb    00000049     ObjectDict.obj (.text:SetFloatPar)
+                  0008ab04    00000048     gpio.obj (.text:GPIO_setPadConfig)
+                  0008ab4c    00000046     PinMux.obj (.text:SetAxisByIdVolts)
+                  0008ab92    00000045     CanSlave.obj (.text:PutCanSlaveQueue)
+                  0008abd7    00000044     AdcIsr.obj (.text:LogI2t)
+                  0008ac1b    00000044     Controller.obj (.text:PosPrefilterMotorOff)
+                  0008ac5f    00000043     LowLevel.obj (.text:initCLAMemory)
+                  0008aca2    00000042     Recorder.obj (.text:InitRecorder)
+                  0008ace4    00000042     ObjectDict.obj (.text:ResetConfigPars)
+                  0008ad26    00000042     Adc.obj (.text:SingleCmpss)
+                  0008ad68    00000042     CanSlave.obj (.text:SlaveSdoConfirmInitDloadBlock)
+                  0008adaa    0000003f     Controller.obj (.text:ArmAutomaticMotorOff)
+                  0008ade9    0000003f     ObjectDict.obj (.text:GetRecorderCRC)
+                  0008ae28    0000003e     ObjectDict.obj (.text:GetConfigPar)
+                  0008ae66    0000003d     MainApp.obj (.text:CfgBlockTransport)
+                  0008aea3    0000003d     interrupt.obj (.text:Interrupt_initModule)
+                  0008aee0    0000003c     Homing.obj (.text:SetAbsPosition)
+                  0008af1c    0000003c     MainApp.obj (.text:main)
+                  0008af58    0000003a     Homing.obj (.text:ImmediateHoming)
+                  0008af92    0000003a     ObjectDict.obj (.text:TestCfgPar)
+                  0008afcc    0000003a     ObjectDict.obj (.text:TestCfgProgramming)
+                  0008b006    00000039     ObjectDict.obj (.text:GetParIndex)
+                  0008b03f    00000037     MainApp.obj (.text:DealCalibration)
+                  0008b076    00000037     gpio.obj (.text:GPIO_setPinConfig)
+                  0008b0ad    00000037     interrupt.obj (.text:Interrupt_enable)
+                  0008b0e4    00000037     CanSlave.obj (.text:SlaveSdoConfirmInitUploadBlock)
+                  0008b11b    00000036     ObjectDict.obj (.text:GetCalibCmd)
+                  0008b151    00000035     ObjectDict.obj (.text:GetDynIdentification)
+                  0008b186    00000033     Recorder.obj (.text:GetFSignalPtr)
+                  0008b1b9    00000033     MainApp.obj (.text:SetProjectId)
+                  0008b1ec    00000032     Controller.obj (.text:RunBiquads)
+                  0008b21e    00000032     ObjectDict.obj (.text:SetControlWord)
+                  0008b250    00000032     sysctl.obj (.text:SysCtl_selectOscSource)
+                  0008b282    00000031     FsiDrv.obj (.text:SetupFSI)
+                  0008b2b3    00000030     SpeedProfiler.obj (.text:SpeedProfiler)
+                  0008b2e3    00000030     rts2800_fpu32_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss)
+                  0008b313    0000002f     sysctl.obj (.text:DCC_setCounterSeeds)
+                  0008b342    0000002f     ObjectDict.obj (.text:GetParamCmd)
+                  0008b371    0000002d     fsi.obj (.text:FSI_performTxInitialization)
+                  0008b39e    0000002d     LinDrv.obj (.text:Put2TxBuf)
+                  0008b3cb    0000002d     Controller.obj (.text:SetMotorOff)
+                  0008b3f8    0000002c     gpio.obj (.text:GPIO_setQualificationMode)
+                  0008b424    0000002c     MainApp.obj (.text:InitTimeOuts)
+                  0008b450    0000002c     BuiltInTest.obj (.text:ManageBrakeRelease)
+                  0008b47c    0000002c     TrapezeProfiler.obj (.text:ResetProfiler)
+                  0008b4a8    0000002c     LowLevel.obj (.text:initCLA)
+                  0008b4d4    0000002b     ObjectDict.obj (.text:GetObjIndex)
+                  0008b4ff    0000002b     ObjectDict.obj (.text:IsInRange)
+                  0008b52a    0000002b     sysctl.obj (.text:SysCtl_selectXTAL)
+                  0008b555    0000002b     rts2800_fpu32_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit)
+                  0008b580    0000002a     IdleLoop.obj (.text:DealFaultState)
+                  0008b5aa    0000002a     TimerArr.obj (.text:SetSysTimerTargetSec)
+                  0008b5d4    0000002a     LinDrv.obj (.text:setupLin)
+                  0008b5fe    00000029     PwmDrive.obj (.text:ClearTrip)
+                  0008b627    00000029     ObjectDict.obj (.text:GetOperationMode)
+                  0008b650    00000029     memcfg.obj (.text:MemCfg_setLSRAMMasterSel)
+                  0008b679    00000029     Brakes.obj (.text:OutBrakeVolts)
+                  0008b6a2    00000029     CanSlave.obj (.text:SlaveSdoConfirmInitUploadExpedit)
+                  0008b6cb    00000029     rts2800_fpu32_eabi.lib : exit.c.obj (.text)
+                  0008b6f4    00000028     adc.obj (.text:ADC_setOffsetTrimAll)
+                  0008b71c    00000028     CanSlave.obj (.text:AbortSlaveSdo)
+                  0008b744    00000027     LowLevel.obj (.text:EPWM_setADCTriggerEventPrescale)
+                  0008b76b    00000027     gpio.obj (.text:GPIO_setDirectionMode)
+                  0008b792    00000026     cla.obj (.text:CLA_setTriggerSource)
+                  0008b7b8    00000025     AdcIsr.obj (.text:Angle2Short)
+                  0008b7dd    00000025     ObjectDict.obj (.text:GetFloatPar)
+                  0008b802    00000025     Recorder.obj (.text:GetSignalFlags)
+                  0008b827    00000025     PwmDrive.obj (.text:KillMotor)
+                  0008b84c    00000025     rts2800_fpu32_eabi.lib : fs_toullfpu32.asm.obj (.text)
+                  0008b871    00000024     ObjectDict.obj (.text:KillCLA)
+                  0008b895    00000024     ObjectDict.obj (.text:SafePrepFlash)
+                  0008b8b9    00000024     LowLevel.obj (.text:SetClaAllSw)
+                  0008b8dd    00000023     cmpss.obj (.text:CMPSS_configFilterHigh)
+                  0008b900    00000023     cmpss.obj (.text:CMPSS_configFilterLow)
+                  0008b923    00000023     LinDrv.obj (.text:InitLinService)
+                  0008b946    00000023     sysctl.obj (.text:SysCtl_pollX1Counter)
+                  0008b969    00000022     TimerArr.obj (.text:GetRemainTimeSec)
+                  0008b98b    00000022     Recorder.obj (.text:SnapIt)
+                  0008b9ad    00000021     fsi.obj (.text:FSI_clearRxModuleReset)
+                  0008b9ce    00000021     fsi.obj (.text:FSI_clearTxModuleReset)
+                  0008b9ef    00000021     Homing.obj (.text:HomingHere)
+                  0008ba10    00000021     TimerArr.obj (.text:IsSysTimerElapse)
+                  0008ba31    00000021     ObjectDict.obj (.text:SetBHControlWord)
+                  0008ba52    00000021     ObjectDict.obj (.text:SetFloatData)
+                  0008ba73    00000020     PinMux.obj (.text:ADC_setupSOC)
+                  0008ba93    00000020     TimerArr.obj (.text:InitSystemTimer)
+                  0008bab3    00000020     Recorder.obj (.text:RecorderDnFloatTrigger)
+                  0008bad3    00000020     Recorder.obj (.text:RecorderEqFloatTrigger)
+                  0008baf3    00000020     Recorder.obj (.text:RecorderUpFloatTrigger)
+                  0008bb13    00000020     ObjectDict.obj (.text:SafeProgramFlash)
+                  0008bb33    00000020     PrjMCAN.obj (.text:SetExtendedBootUpMessage)
+                  0008bb53    00000020     CanSlave.obj (.text:SlaveSdoConfirmInitUploadSegmented)
+                  0008bb73    00000020     rts2800_fpu32_eabi.lib : ll_tofsfpu32.asm.obj (.text)
+                  0008bb93    0000001f     Controller.obj (.text:ResetSpeedController)
+                  0008bbb2    0000001f     TimerArr.obj (.text:SetSysTimerTarget)
+                  0008bbd1    0000001f     CanSlave.obj (.text:SlaveSdoConfirmInitDload)
+                  0008bbf0    0000001f     LinDrv.obj (.text:TransmitTxBuf)
+                  0008bc0f    0000001f     AdcIsr.obj (.text:fSatNanProt)
+                  0008bc2e    0000001e     adc.obj (.text:ADC_setVREF)
+                  0008bc4c    0000001e     Testing.obj (.text:CF_WaitStabilize)
+                  0008bc6a    0000001e     dma.obj (.text:DMA_configWrap)
+                  0008bc88    0000001e     fsi.obj (.text:FSI_resetRxModule)
+                  0008bca6    0000001e     fsi.obj (.text:FSI_resetTxModule)
+                  0008bcc4    0000001e     interrupt.obj (.text:Interrupt_initVectorTable)
+                  0008bce2    0000001e     CanSlave.obj (.text:SlaveSdoEndOfSubBlock)
+                  0008bd00    0000001e     rts2800_fpu32_eabi.lib : ll_cmp28.asm.obj (.text)
+                  0008bd1e    0000001d     ObjectDict.obj (.text:GetShortData)
+                  0008bd3b    0000001d     ObjectDict.obj (.text:SetPositionTarget)
+                  0008bd58    0000001d     TimerArr.obj (.text:WaitStamSec)
+                  0008bd75    0000001d     rts2800_fpu32_eabi.lib : memcpy.c.obj (.text)
+                  0008bd92    0000001c     Adc.obj (.text:ADC_setInterruptSource)
+                  0008bdae    0000001c     AsmUtil.obj (.text)
+                  0008bdca    0000001c     AdcIsr.obj (.text:CenterDiffPu)
+                  0008bde6    0000001c     dma.obj (.text:DMA_configAddresses)
+                  0008be02    0000001c     ObjectDict.obj (.text:GetAtpData)
+                  0008be1e    0000001c     ObjectDict.obj (.text:GetFloatData)
+                  0008be3a    0000001c     Recorder.obj (.text:RecorderEqSuTrigger)
+                  0008be56    0000001c     ObjectDict.obj (.text:SafeEraseFlash)
+                  0008be72    0000001c     LowLevel.obj (.text:setupEcap)
+                  0008be8e    0000001b     ObjectDict.obj (.text:GetMotionPar)
+                  0008bea9    0000001b     ObjectDict.obj (.text:GetRatedCurrent)
+                  0008bec4    0000001b     Recorder.obj (.text:RecorderDnLTrigger)
+                  0008bedf    0000001b     Recorder.obj (.text:RecorderDnLuTrigger)
+                  0008befa    0000001b     Recorder.obj (.text:RecorderDnSTrigger)
+                  0008bf15    0000001b     Recorder.obj (.text:RecorderDnSuTrigger)
+                  0008bf30    0000001b     Recorder.obj (.text:RecorderEqLTrigger)
+                  0008bf4b    0000001b     Recorder.obj (.text:RecorderEqLuTrigger)
+                  0008bf66    0000001b     Recorder.obj (.text:RecorderEqSTrigger)
+                  0008bf81    0000001b     Recorder.obj (.text:RecorderUpLTrigger)
+                  0008bf9c    0000001b     Recorder.obj (.text:RecorderUpLuTrigger)
+                  0008bfb7    0000001b     Recorder.obj (.text:RecorderUpSTrigger)
+                  0008bfd2    0000001b     Recorder.obj (.text:RecorderUpSuTrigger)
+                  0008bfed    0000001b     TimerArr.obj (.text:WaitStam)
+                  0008c008    0000001a     sysctl.obj (.text:DCC_enableSingleShotMode)
+                  0008c022    0000001a     Controller.obj (.text:SafeSetMotorOff)
+                  0008c03c    0000001a     sysctl.obj (.text:SysCtl_selectXTALSingleEnded)
+                  0008c056    0000001a     TimerArr.obj (.text:UpdateSysTimer)
+                  0008c070    00000019     lin.obj (.text:LIN_setFrameLength)
+                  0008c089    00000018     MainApp.obj (.text:CheckAlign)
+                  0008c0a1    00000018     LowLevel.obj (.text:EPWM_setCounterCompareValue)
+                  0008c0b9    00000018     MainApp.obj (.text:InitPosPrefilter)
+                  0008c0d1    00000018     lin.obj (.text:LIN_setRxMask)
+                  0008c0e9    00000018     ObjectDict.obj (.text:SetHomingMethod)
+                  0008c101    00000018     LowLevel.obj (.text:SysCtl_disablePeripheral)
+                  0008c119    00000018     ObjectDict.obj (.text:TestFlashAddress)
+                  0008c131    00000018     AdcIsr.obj (.text:__isnanf)
+                  0008c149    00000017     Adc.obj (.text:ASysCtl_selectCMPHPMux)
+                  0008c160    00000017     Adc.obj (.text:ASysCtl_selectCMPLPMux)
+                  0008c177    00000017     mcan.obj (.text:HW_WR_FIELD32_RAW)
+                  0008c18e    00000017     lin.obj (.text:LIN_setSyncFields)
+                  0008c1a5    00000017     LowLevel.obj (.text:SysCtl_enablePeripheral)
+                  0008c1bc    00000017     MainApp.obj (.text:SysCtl_enablePeripheral)
+                  0008c1d3    00000017     sysctl.obj (.text:SysCtl_enablePeripheral)
+                  0008c1ea    00000017     rts2800_fpu32_eabi.lib : boot28.asm.obj (.text)
+                  0008c201    00000016     dma.obj (.text:DMA_configTransfer)
+                  0008c217    00000016     MainApp.obj (.text:FlushCanQueues)
+                  0008c22d    00000016     LowLevel.obj (.text:MemCfg_setCLAMemType)
+                  0008c243    00000016     AdcIsr.obj (.text:ResetRefGens)
+                  0008c259    00000015     LowLevel.obj (.text:EPWM_setInterruptEventCount)
+                  0008c26e    00000015     FsiDrv.obj (.text:FSI_setTxECCComputeWidth)
+                  0008c283    00000015     ObjectDict.obj (.text:GetSamplingTime)
+                  0008c298    00000015     lin.obj (.text:LIN_setDebugSuspendMode)
+                  0008c2ad    00000015     PrjMCAN.obj (.text:SetBootUpMessage)
+                  0008c2c2    00000015     CanSlave.obj (.text:SlaveSdoEndOfBlock)
+                  0008c2d7    00000014     sysctl.obj (.text:DCC_setCounter0ClkSource)
+                  0008c2eb    00000014     sysctl.obj (.text:DCC_setCounter1ClkSource)
+                  0008c2ff    00000014     PwmDrive.obj (.text:EPWM_setPhaseShift)
+                  0008c313    00000014     fsi.obj (.text:FSI_configPrescalar)
+                  0008c327    00000014     ObjectDict.obj (.text:GetPeakCurrentPromils)
+                  0008c33b    00000013     fsi.obj (.text:FSI_performRxInitialization)
+                  0008c34e    00000013     Testing.obj (.text:GetSinCorrelation)
+                  0008c361    00000013     BuiltInTest.obj (.text:IsResetBlocked)
+                  0008c374    00000013     lin.obj (.text:LIN_setChecksumType)
+                  0008c387    00000012     Adc.obj (.text:ADC_setSOCPriority)
+                  0008c399    00000012     dma.obj (.text:DMA_configBurst)
+                  0008c3ab    00000012     LowLevel.obj (.text:EPWM_enableADCTrigger)
+                  0008c3bd    00000012     lin.obj (.text:LIN_setMessageFiltering)
+                  0008c3cf    00000011     FsiDrv.obj (.text:FSI_setRxSoftwareFrameSize)
+                  0008c3e0    00000011     Recorder.obj (.text:GetRecorderStat)
+                  0008c3f1    00000011     LinDrv.obj (.text:LIN_setBaudRatePrescaler)
+                  0008c402    00000011     lin.obj (.text:LIN_setBaudRatePrescaler)
+                  0008c413    00000011     rts2800_fpu32_eabi.lib : ull_tofsfpu32.asm.obj (.text)
+                  0008c424    00000010     LowLevel.obj (.text:CPUTimer_startTimer)
+                  0008c434    00000010     lin.obj (.text:LIN_disableSCIMode)
+                  0008c444    00000010     lin.obj (.text:LIN_setTxMask)
+                  0008c454    00000010     ObjectDict.obj (.text:ResetCpu)
+                  0008c464    0000000f     ObjectDict.obj (.text:CLA_performHardReset)
+                  0008c473    0000000f     ObjectDict.obj (.text:CLA_performSoftReset)
+                  0008c482    0000000f     Adc.obj (.text:CMPSS_configLowComparator)
+                  0008c491    0000000f     Adc.obj (.text:CMPSS_configOutputsLow)
+                  0008c4a0    0000000f     AdcIsr.obj (.text:ExtendCnt)
+                  0008c4af    0000000f     FsiDrv.obj (.text:FSI_setTxSoftwareFrameSize)
+                  0008c4be    0000000f     FsiDrv.obj (.text:FSI_setTxStartMode)
+                  0008c4cd    0000000f     LowLevel.obj (.text:Interrupt_register)
+                  0008c4dc    0000000f     lin.obj (.text:LIN_setMaximumBaudRate)
+                  0008c4eb    0000000f     mcan.obj (.text:MCAN_setOpMode)
+                  0008c4fa    0000000f     PwmDrive.obj (.text:SetGateDriveEable)
+                  0008c509    0000000f     LowLevel.obj (.text:SysCtl_setWatchdogPredivider)
+                  0008c518    0000000f     AdcIsr.obj (.text:fSat)
+                  0008c527    0000000e     LowLevel.obj (.text:EPWM_clearADCTriggerFlag)
+                  0008c535    0000000e     interrupt.obj (.text:Interrupt_defaultHandler)
+                  0008c543    0000000e     AdcIsr.obj (.text:IsDin1)
+                  0008c551    0000000e     AdcIsr.obj (.text:IsDin2)
+                  0008c55f    0000000e     lin.obj (.text:LIN_disableModule)
+                  0008c56d    0000000e     lin.obj (.text:LIN_enableModule)
+                  0008c57b    0000000e     LowLevel.obj (.text:UnpauseInts)
+                  0008c589    0000000e     AdcIsr.obj (.text:crc_ccitt_byte)
+                  0008c597    0000000d     LowLevel.obj (.text:CPUTimer_setPreScaler)
+                  0008c5a4    0000000d     fsi.obj (.text:FSI_clearRxEvents)
+                  0008c5b1    0000000d     fsi.obj (.text:FSI_clearTxEvents)
+                  0008c5be    0000000d     FlashDrv.obj (.text:Flash_getHighErrorStatus)
+                  0008c5cb    0000000d     mcan.obj (.text:HW_RD_FIELD32_RAW)
+                  0008c5d8    0000000d     interrupt.obj (.text:Interrupt_disableMaster)
+                  0008c5e5    0000000d     interrupt.obj (.text:Interrupt_enableMaster)
+                  0008c5f2    0000000d     mcan.obj (.text:MCAN_getOpMode)
+                  0008c5ff    0000000d     LowLevel.obj (.text:PauseInts)
+                  0008c60c    0000000d     LowLevel.obj (.text:SysCtl_setLowSpeedClock)
+                  0008c619    0000000c     Adc.obj (.text:ADC_setInterruptPulseMode)
+                  0008c625    0000000c     Adc.obj (.text:ADC_setPrescaler)
+                  0008c631    0000000c     LowLevel.obj (.text:CLA_enableTasks)
+                  0008c63d    0000000c     ObjectDict.obj (.text:CLA_enableTasks)
+                  0008c649    0000000c     LowLevel.obj (.text:CLA_forceTasks)
+                  0008c655    0000000c     MainApp.obj (.text:CLA_forceTasks)
+                  0008c661    0000000c     LowLevel.obj (.text:CLA_mapTaskVector)
+                  0008c66d    0000000c     ObjectDict.obj (.text:CLA_mapTaskVector)
+                  0008c679    0000000c     Adc.obj (.text:CMPSS_configDAC)
+                  0008c685    0000000c     Adc.obj (.text:CMPSS_configHighComparator)
+                  0008c691    0000000c     Adc.obj (.text:CMPSS_configOutputsHigh)
+                  0008c69d    0000000c     sysctl.obj (.text:DCC_disableDoneSignal)
+                  0008c6a9    0000000c     fsi.obj (.text:FSI_delayWait)
+                  0008c6b5    0000000c     FsiDrv.obj (.text:FSI_disableRxInternalLoopback)
+                  0008c6c1    0000000c     FsiDrv.obj (.text:FSI_setRxDataWidth)
+                  0008c6cd    0000000c     FsiDrv.obj (.text:FSI_setTxDataWidth)
+                  0008c6d9    0000000c     Recorder.obj (.text:FlagRecorderTrigger)
+                  0008c6e5    0000000c     FlashDrv.obj (.text:Flash_getLowErrorStatus)
+                  0008c6f1    0000000c     lin.obj (.text:LIN_setLINMode)
+                  0008c6fd    0000000c     sysctl.obj (.text:SysCtl_setPLLSysClk)
+                  0008c709    0000000c     PwmDrive.obj (.text:XBAR_setInputPin)
+                  0008c715    0000000c     rts2800_fpu32_eabi.lib : args_main.c.obj (.text)
+                  0008c721    0000000b     Adc.obj (.text:CMPSS_clearFilterLatchHigh)
+                  0008c72c    0000000b     Adc.obj (.text:CMPSS_clearFilterLatchLow)
+                  0008c737    0000000b     Adc.obj (.text:CMPSS_initFilterHigh)
+                  0008c742    0000000b     Adc.obj (.text:CMPSS_initFilterLow)
+                  0008c74d    0000000b     LowLevel.obj (.text:CPUTimer_stopTimer)
+                  0008c758    0000000b     sysctl.obj (.text:DCC_clearDoneFlag)
+                  0008c763    0000000b     sysctl.obj (.text:DCC_clearErrorFlag)
+                  0008c76e    0000000b     sysctl.obj (.text:DCC_disableErrorSignal)
+                  0008c779    0000000b     sysctl.obj (.text:DCC_disableModule)
+                  0008c784    0000000b     sysctl.obj (.text:DCC_enableModule)
+                  0008c78f    0000000b     fsi.obj (.text:FSI_enableTxClock)
+                  0008c79a    0000000b     fsi.obj (.text:FSI_selectTxPLLClock)
+                  0008c7a5    0000000b     ObjectDict.obj (.text:GetManufacturerSpecificCode)
+                  0008c7b0    0000000b     PrjMCAN.obj (.text:GetPlaceInMessageQueue)
+                  0008c7bb    0000000b     lin.obj (.text:LIN_disableAutomaticBaudrate)
+                  0008c7c6    0000000b     lin.obj (.text:LIN_disableExtLoopback)
+                  0008c7d1    0000000b     lin.obj (.text:LIN_disableIntLoopback)
+                  0008c7dc    0000000b     lin.obj (.text:LIN_enableDataReceiver)
+                  0008c7e7    0000000b     lin.obj (.text:LIN_enableDataTransmitter)
+                  0008c7f2    0000000b     sysctl.obj (.text:SysCtl_isMCDClockFailureDetected)
+                  0008c7fd    0000000b     rts2800_fpu32_eabi.lib : u_div28.asm.obj (.text)
+                  0008c808    0000000a     Adc.obj (.text:CMPSS_setDACValueLow)
+                  0008c812    0000000a     ObjectDict.obj (.text:CMPSS_setDACValueLow)
+                  0008c81c    0000000a     Adc.obj (.text:CMPSS_setHysteresis)
+                  0008c826    0000000a     cputimer.obj (.text:CPUTimer_setEmulationMode)
+                  0008c830    0000000a     LinDrv.obj (.text:DMA_initController)
+                  0008c83a    0000000a     PwmDrive.obj (.text:EPWM_setFallingEdgeDelayCount)
+                  0008c844    0000000a     PwmDrive.obj (.text:EPWM_setRisingEdgeDelayCount)
+                  0008c84e    0000000a     PwmDrive.obj (.text:EPWM_setTimeBasePeriod)
+                  0008c858    0000000a     FsiDrv.obj (.text:FSI_setTxFrameTag)
+                  0008c862    0000000a     FsiDrv.obj (.text:FSI_setTxFrameType)
+                  0008c86c    0000000a     LowLevel.obj (.text:GetTemperatureFromAdc)
+                  0008c876    0000000a     lin.obj (.text:LIN_setCommMode)
+                  0008c880    0000000a     lin.obj (.text:LIN_triggerChecksumCompare)
+                  0008c88a    0000000a     CanSlave.obj (.text:SysCtl_enableWatchdog)
+                  0008c894    0000000a     LowLevel.obj (.text:SysCtl_enableWatchdog)
+                  0008c89e    0000000a     ObjectDict.obj (.text:SysCtl_enableWatchdog)
+                  0008c8a8    0000000a     LowLevel.obj (.text:WaitUsec)
+                  0008c8b2    00000009     Adc.obj (.text:ADC_enableConverter)
+                  0008c8bb    00000009     Adc.obj (.text:CMPSS_enableModule)
+                  0008c8c4    00000009     LowLevel.obj (.text:CPUTimer_disableInterrupt)
+                  0008c8cd    00000009     LowLevel.obj (.text:CPUTimer_resumeTimer)
+                  0008c8d6    00000009     LowLevel.obj (.text:EPWM_clearEventTriggerInterruptFlag)
+                  0008c8df    00000009     PwmDrive.obj (.text:EPWM_disableChopper)
+                  0008c8e8    00000009     LowLevel.obj (.text:EPWM_disableInterrupt)
+                  0008c8f1    00000009     lin.obj (.text:LIN_disableInterrupt)
+                  0008c8fa    00000009     lin.obj (.text:LIN_enableMultibufferMode)
+                  0008c903    00000009     lin.obj (.text:LIN_enableParity)
+                  0008c90c    00000009     LinDrv.obj (.text:LIN_enterSoftwareReset)
+                  0008c915    00000009     lin.obj (.text:LIN_enterSoftwareReset)
+                  0008c91e    00000009     LinDrv.obj (.text:LIN_exitSoftwareReset)
+                  0008c927    00000009     lin.obj (.text:LIN_exitSoftwareReset)
+                  0008c930    00000009     MainApp.obj (.text:SysCtl_serviceWatchdog)
+                  0008c939    00000009     TimerArr.obj (.text:SysCtl_serviceWatchdog)
+                  0008c942    00000009     AdcIsr.obj (.text:__relaxed_sqrtf)
+                  0008c94b    00000009     rts2800_fpu32_eabi.lib : _lock.c.obj (.text)
+                  0008c954    00000008     Adc.obj (.text:CMPSS_setDACValueHigh)
+                  0008c95c    00000008     ObjectDict.obj (.text:CMPSS_setDACValueHigh)
+                  0008c964    00000008     PwmDrive.obj (.text:EPWM_setTimeBaseCounter)
+                  0008c96c    00000008     Commutation.obj (.text:GPIO_getInterruptCounter)
+                  0008c974    00000008     LowLevel.obj (.text:SysCtl_disableWatchdog)
+                  0008c97c    00000008     rts2800_fpu32_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none)
+                  0008c984    00000008     f28003x_codestartbranch.obj (.text)
+                  0008c98c    00000007     LowLevel.obj (.text:ASysCtl_enableTemperatureSensor)
+                  0008c993    00000007     LowLevel.obj (.text:ASysCtl_lockVREG)
+                  0008c99a    00000007     LowLevel.obj (.text:CPUTimer_setPeriod)
+                  0008c9a1    00000007     Commutation.obj (.text:InitHallModule)
+                  0008c9a8    00000007     ObjectDict.obj (.text:NoSuchGetObject)
+                  0008c9af    00000007     ObjectDict.obj (.text:NoSuchSetObject)
+                  0008c9b6    00000007     sysctl.obj (.text:SysCtl_resetMCD)
+                  0008c9bd    00000007     rts2800_fpu32_eabi.lib : memset.c.obj (.text)
+                  0008c9c4    00000006     FlashDrv.obj (.text:Example_Error)
+                  0008c9ca    00000006     Recorder.obj (.text:ImmediateRecorderTrigger)
+                  0008c9d0    00000006     FsiDrv.obj (.text:InitFsiService)
+                  0008c9d6    00000006     FsiDrv.obj (.text:Interrupt_clearACKGroup)
+                  0008c9dc    00000006     LowLevel.obj (.text:Interrupt_clearACKGroup)
+                  0008c9e2    00000006     AdcIsr.obj (.text:RestoreInts)
+                  0008c9e8    00000006     ObjectDict.obj (.text:SetHaltOptionCode)
+                  0008c9ee    00000006     ObjectDict.obj (.text:SetPdo1RxParam)
+                  0008c9f4    00000006     ObjectDict.obj (.text:SetPdo1TxParam)
+                  0008c9fa    00000006     ObjectDict.obj (.text:SetPdo2TxParam)
+                  0008ca00    00000006     ObjectDict.obj (.text:SetQuickStopOptionCode)
+                  0008ca06    00000006     ObjectDict.obj (.text:SetSyncArrivalTime)
+                  0008ca0c    00000006     rts2800_fpu32_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI)
+                  0008ca12    00000004     AdcIsr.obj (.text:BlockInts)
+                  0008ca16    00000004     CanSlave.obj (.text:GetOdSize)
+                  0008ca1a    00000004     ObjectDict.obj (.text:IsBufferUsedForProgramming)
+                  0008ca1e    00000004     LowLevel.obj (.text:ResetHardwareSysTimer)
+                  0008ca22    00000004     LowLevel.obj (.text:SysCtl_deviceCal)
+                  0008ca26    00000003     FlashDrv.obj (.text:FMSTAT_Fail)
+                  0008ca29    00000002     Recorder.obj (.text:EmptyRecorderTrigger)
+                  0008ca2b    00000002     interrupt.obj (.text:Interrupt_illegalOperationHandler)
+                  0008ca2d    00000002     interrupt.obj (.text:Interrupt_nmiHandler)
+                  0008ca2f    00000002     rts2800_fpu32_eabi.lib : pre_init.c.obj (.text)
+                  0008ca31    00000001     Testing.obj (.text:CF_Done)
+                  0008ca32    00000001     Testing.obj (.text:CF_Inactive)
+                  0008ca33    00000001     rts2800_fpu32_eabi.lib : startup.c.obj (.text)
+                  0008ca34    00000001     LowLevel.obj (.text:setupHallInputs)
+
+.reset     0    003fffc0    00000000     DSECT
+
+.stack     0    00000400    00000100     UNINITIALIZED
+                  00000400    00000100     --HOLE--
+
+.init_array 
+*          0    00083008    00000000     UNINITIALIZED
+
+.bss       0    0000a488    00000b7e     UNINITIALIZED
+                  0000a488    00000012     PrjMCAN.obj (.bss)
+                  0000a49a    00000012     FsiDrv.obj (.bss:StamBuf)
+                  0000a4ac    00000010     MainApp.obj (.bss:CfgDirty)
+                  0000a4bc    00000001     FsiDrv.obj (.bss)
+                  0000a4bd    00000001     ObjectDict.obj (.bss)
+                  0000a4be    00000002     --HOLE--
+                  0000a4c0    000007ee     MainApp.obj (.bss)
+                  0000acae    00000200     MainApp.obj (.bss:SlaveSdoBuf)
+                  0000aeae    00000008     CanSlave.obj (.bss)
+                  0000aeb6    00000008     MainApp.obj (.bss:HallTable)
+                  0000aebe    00000002     --HOLE--
+                  0000aec0    0000013c     Recorder.obj (.bss)
+                  0000affc    00000004     --HOLE--
+                  0000b000    00000006     FAPI_F28003x_EABI_v1.58.01.lib : Init.obj (.bss)
+
+Cla1ToCpuMsgRAM 
+*          0    00001480    00000014     UNINITIALIZED
+                  00001480    00000014     MainApp.obj (Cla1ToCpuMsgRAM)
+
+CpuToCla1MsgRAM 
+*          0    00001500    00000042     UNINITIALIZED
+                  00001500    00000042     MainApp.obj (CpuToCla1MsgRAM)
+
+.data      0    0000b006    000000a6     UNINITIALIZED
+                  0000b006    0000004a     ObjectDict.obj (.data:pIdRslt)
+                  0000b050    0000003a     ObjectDict.obj (.data:pFloatData)
+                  0000b08a    0000000c     Testing.obj (.data:CorrFuncs)
+                  0000b096    0000000c     ObjectDict.obj (.data:pAtpRslt)
+                  0000b0a2    00000006     rts2800_fpu32_eabi.lib : exit.c.obj (.data)
+                  0000b0a8    00000002                            : _lock.c.obj (.data:_lock)
+                  0000b0aa    00000002                            : _lock.c.obj (.data:_unlock)
+
+ramgs0to3 
+*          0    0000c000    00002084     UNINITIALIZED
+                  0000c000    00002000     Recorder.obj (ramgs0to3)
+                  0000e000    00000084     LinDrv.obj (ramgs0to3)
+
+.const     0    00083008    00000eb6     
+                  00083008    00000344     MainApp.obj (.const:ProjSpecificCtl)
+                  0008334c    0000026c     MainApp.obj (.const:ParTable)
+                  000835b8    00000248     MainApp.obj (.const:RecorderSigRaw)
+                  00083800    0000023c     MainApp.obj (.const:ProjSpecificData)
+                  00083a3c    000001b8     MainApp.obj (.const:ConfigTable)
+                  00083bf4    00000100     MainApp.obj (.const:crc_ccitt_table)
+                  00083cf4    000000b4     ObjectDict.obj (.const:ObjDictionaryItem)
+                  00083da8    000000a8     MainApp.obj (.const:CalibPtrTable)
+                  00083e50    0000003c     ObjectDict.obj (.const:ShortDataItem)
+                  00083e8c    00000028     ObjectDict.obj (.const:ShortDesc)
+                  00083eb4    00000006     MainApp.obj (.const)
+                  00083eba    00000004     ObjectDict.obj (.const)
+
+.statistics 
+*          0    0009f000    00000004     
+                  0009f000    00000004     IdleLoop.obj (.statistics)
+
+Cla1Prog   0    00084060    00000b62     RUN ADDR = 00008000
+                  00084060    0000053c     CurrentControl.obj (Cla1Prog:Cla1Task1)
+                  0008459c    000002ea     CurrentControl.obj (Cla1Prog:Cla1Task3)
+                  00084886    000001dc     CurrentControl.obj (Cla1Prog:CheckMotorReady)
+                  00084a62    000000ae     CurrentControl.obj (Cla1Prog:ClaCheckMotorOn)
+                  00084b10    00000054     CurrentControl.obj (Cla1Prog:Cla1Task2)
+                  00084b64    00000036     CurrentControl.obj (Cla1Prog:ProcAnalogSamples)
+                  00084b9a    00000018     CurrentControl.obj (Cla1Prog:Cla1Task8)
+                  00084bb2    00000010     CurrentControl.obj (Cla1Prog:Cla1Task7)
+
+.scratchpad 
+*          0    000091f0    00000014     UNINITIALIZED
+                  000091f0    00000014     CurrentControl.obj (.scratchpad:Cla1Prog:Cla1Task1)
+                  000091f0    0000000c     CurrentControl.obj (.scratchpad:Cla1Prog:Cla1Task3)
+                  000091fc    00000006     CurrentControl.obj (.scratchpad:Cla1Prog:CheckMotorReady)
+
+.bss_cla   0    00009204    00000008     UNINITIALIZED
+                  00009204    00000008     CurrentControl.obj (.bss_cla)
+
+cla_shared 
+*          0    00009000    00000190     UNINITIALIZED
+                  00009000    00000190     MainApp.obj (cla_shared)
+
+.const_cla 
+*          0    00084000    00000060     RUN ADDR = 00009190
+                  00084000    00000060     CurrentControl.obj (.const_cla:SinTable)
+
+.TI.ramfunc 
+*          0    00085000    00000c88     RUN ADDR = 00009800
+                  00085000    0000037b     FAPI_F28003x_EABI_v1.58.01.lib : FlashStateMachine.obj (.text:Fapi_setupFlashStateMachine)
+                  0008537b    00000268                                    : Program.obj (.text:Fapi_issueProgrammingCommand)
+                  000855e3    00000080                                    : Async.obj (.text:Fapi_issueAsyncCommandWithAddress)
+                  00085663    0000007c                                    : BlankCheck.obj (.text:Fapi_doBlankCheck)
+                  000856df    0000007a                                    : Read.obj (.text:Fapi_checkRegionForValue)
+                  00085759    0000007a                                    : Read.obj (.text:Fapi_loopRegionForValue)
+                  000857d3    00000061                                    : Utilities.obj (.text:Fapi_configureFMAC)
+                  00085834    00000056                                    : FlashStateMachine.obj (.text:Fapi_issueFsmCommand)
+                  0008588a    0000003b                                    : Utilities.obj (.text:Fapi_isAddressValid)
+                  000858c5    0000003a                                    : Utilities.obj (.text:Fapi_calculateEcc)
+                  000858ff    00000037                                    : FlashStateMachine.obj (.text:Fapi_setActiveFlashBank)
+                  00085936    00000032                                    : Init.obj (.text:Fapi_initializeAPI)
+                  00085968    00000031                                    : FlashStateMachine.obj (.text:Fapi_setupBankSectorEnable)
+                  00085999    0000002c                                    : Utilities.obj (.text:Fapi_calculateFletcherChecksum)
+                  000859c5    0000002c                                    : Utilities.obj (.text:Fapi_divideUnsignedLong)
+                  000859f1    00000024                                    : FlashStateMachine.obj (.text:Fapi_isAddressEcc)
+                  00085a15    00000020                                    : Async.obj (.text:Fapi_issueAsyncCommand)
+                  00085a35    0000001d                                    : Read.obj (.text:Fapi_flushPipeline)
+                  00085a52    0000001c                                    : FlashStateMachine.obj (.text:Fapi_setupSectorsForWrite)
+                  00085a6e    0000001a                                    : Utilities.obj (.text:Fapi_WriteReadBack)
+                  00085a88    0000000f                                    : Verify.obj (.text:Fapi_doVerify)
+                  00085a97    0000000e                                    : FlashStateMachine.obj (.text:Fapi_checkFsmForReady)
+                  00085aa5    0000000d                                    : Utilities.obj (.text:Fapi_calculateOtpChecksum)
+                  00085ab2    0000000b                                    : Utilities.obj (.text:Fapi_scaleCycleValues)
+                  00085abd    00000007                                    : FlashStateMachine.obj (.text:Fapi_getFsmStatus)
+                  00085ac4    000000ae     FlashDrv.obj (.TI.ramfunc:ProgramPageAutoECC)
+                  00085b72    00000036     FlashDrv.obj (.TI.ramfunc:EraseSector)
+                  00085ba8    0000002d     flash.obj (.TI.ramfunc:Flash_initModule)
+                  00085bd5    00000022     flash.obj (.TI.ramfunc:Flash_setBankPowerMode)
+                  00085bf7    0000001b     FlashDrv.obj (.TI.ramfunc:PrepFlash4Burn)
+                  00085c12    00000013     flash.obj (.TI.ramfunc:Flash_setPumpPowerMode)
+                  00085c25    00000011     flash.obj (.TI.ramfunc:Flash_setWaitstates)
+                  00085c36    0000000e     flash.obj (.TI.ramfunc:Flash_disableCache)
+                  00085c44    0000000e     flash.obj (.TI.ramfunc:Flash_disablePrefetch)
+                  00085c52    0000000d     flash.obj (.TI.ramfunc:Flash_enableCache)
+                  00085c5f    0000000d     flash.obj (.TI.ramfunc:Flash_enablePrefetch)
+                  00085c6c    0000000c     FlashDrv.obj (.TI.ramfunc:Flash_enableECC)
+                  00085c78    0000000c     flash.obj (.TI.ramfunc:Flash_enableECC)
+                  00085c84    00000004     sysctl.obj (.TI.ramfunc)
+
+MODULE SUMMARY
+
+       Module                        code    ro data   rw data
+       ------                        ----    -------   -------
+    .\Application\
+       MainApp.obj                   2525    3482      3052   
+       ObjectDict.obj                4061    338       145    
+       CanSlave.obj                  1425    0         8      
+       Testing.obj                   897     0         12     
+       AdcIsr.obj                    608     0         0      
+       TimerArr.obj                  263     0         0      
+       IdleLoop.obj                  159     4         0      
+       Brakes.obj                    41      0         0      
+       AsmUtil.obj                   28      0         0      
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        10007   3824      3217   
+                                                              
+    .\Control\
+       CurrentControl.obj            5828    192       46     
+       Controller.obj                3067    0         0      
+       Homing.obj                    729     0         0      
+       Commutation.obj               620     0         0      
+       TrapezeProfiler.obj           493     0         0      
+       PTDriverSimple.obj            350     0         0      
+       PosPrefilter.obj              149     0         0      
+       SpeedProfiler.obj             48      0         0      
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        11284   192       46     
+                                                              
+    .\Drivers\
+       PrjMCAN.obj                   1226    0         18     
+       FsiDrv.obj                    1169    0         19     
+       LowLevel.obj                  1137    0         0      
+       PwmDrive.obj                  632     0         0      
+       Adc.obj                       627     0         0      
+       FlashDrv.obj                  568     0         0      
+       LinDrv.obj                    411     0         132    
+       PinMux.obj                    519     0         0      
+       EncDrive.obj                  143     0         0      
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        6432    0         169    
+                                                              
+    .\SelfTest\
+       BuiltInTest.obj               1478    0         0      
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        1478    0         0      
+                                                              
+    .\SharedH\
+       Recorder.obj                  2104    0         8508   
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        2104    0         8508   
+                                                              
+    .\driverlib\
+       sysctl.obj                    912     0         0      
+       lin.obj                       458     0         0      
+       interrupt.obj                 389     0         0      
+       flash.obj                     362     0         0      
+       fsi.obj                       270     0         0      
+       dma.obj                       246     0         0      
+       gpio.obj                      210     0         0      
+       adc.obj                       70      0         0      
+       cmpss.obj                     70      0         0      
+       mcan.obj                      64      0         0      
+       memcfg.obj                    41      0         0      
+       cla.obj                       38      0         0      
+       cputimer.obj                  10      0         0      
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        3140    0         0      
+                                                              
+    .\f28003x\common\source\
+       f28003x_codestartbranch.obj   10      0         0      
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        10      0         0      
+                                                              
+    ../Ti/FAPI_F28003x_EABI_v1.58.01.lib
+       FlashStateMachine.obj         2332    0         0      
+       Program.obj                   1232    0         0      
+       Utilities.obj                 704     0         0      
+       Read.obj                      546     0         0      
+       Async.obj                     320     0         0      
+       BlankCheck.obj                248     0         0      
+       Init.obj                      100     0         6      
+       Verify.obj                    30      0         0      
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        5512    0         6      
+                                                              
+    C:\ti\ccs1250\ccs\tools\compiler\ti-cgt-c2000_22.6.1.LTS\lib\rts2800_fpu32_eabi.lib
+       copy_decompress_lzss.c.obj    48      0         0      
+       exit.c.obj                    41      0         6      
+       autoinit.c.obj                43      0         0      
+       fs_toullfpu32.asm.obj         37      0         0      
+       ll_tofsfpu32.asm.obj          32      0         0      
+       ll_cmp28.asm.obj              30      0         0      
+       memcpy.c.obj                  29      0         0      
+       boot28.asm.obj                23      0         0      
+       ull_tofsfpu32.asm.obj         17      0         0      
+       _lock.c.obj                   9       0         4      
+       args_main.c.obj               12      0         0      
+       u_div28.asm.obj               11      0         0      
+       copy_decompress_none.c.obj    8       0         0      
+       memset.c.obj                  7       0         0      
+       copy_zero_init.c.obj          6       0         0      
+       pre_init.c.obj                2       0         0      
+       startup.c.obj                 1       0         0      
+    +--+-----------------------------+-------+---------+---------+
+       Total:                        356     0         10     
+                                                              
+       Stack:                        0       0         256    
+       Linker Generated:             0       236       0      
+    +--+-----------------------------+-------+---------+---------+
+       Grand Total:                  40323   4252      12212  
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 00083fc4 records: 8, size/record: 4, table size: 32
+	.data: load addr=00083ef8, load size=000000aa bytes, run addr=0000b006, run size=000000a6 bytes, compression=copy
+	.bss: load addr=00083fa8, load size=00000004 bytes, run addr=0000a488, run size=00000b7e bytes, compression=zero_init
+	.bss_cla: load addr=00083fac, load size=00000004 bytes, run addr=00009204, run size=00000008 bytes, compression=zero_init
+	.scratchpad: load addr=00083fb0, load size=00000004 bytes, run addr=000091f0, run size=00000014 bytes, compression=zero_init
+	Cla1ToCpuMsgRAM: load addr=00083fb4, load size=00000004 bytes, run addr=00001480, run size=00000014 bytes, compression=zero_init
+	CpuToCla1MsgRAM: load addr=00083fb8, load size=00000004 bytes, run addr=00001500, run size=00000042 bytes, compression=zero_init
+	cla_shared: load addr=00083fbc, load size=00000004 bytes, run addr=00009000, run size=00000190 bytes, compression=zero_init
+	ramgs0to3: load addr=00083fc0, load size=00000004 bytes, run addr=0000c000, run size=00002084 bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 00083fa2 records: 3, size/record: 2, table size: 6
+	index: 0, handler: __TI_zero_init
+	index: 1, handler: __TI_decompress_lzss
+	index: 2, handler: __TI_decompress_none
+
+
+GLOBAL DATA SYMBOLS: SORTED BY DATA PAGE
+
+address     data page           name
+--------    ----------------    ----
+00000400      10 (00000400)     __stack
+
+00001480      52 (00001480)     ClaMailOut
+
+00001500      54 (00001500)     ClaMailIn
+
+00009000     240 (00009000)     Geom
+
+00009040     241 (00009040)     ClaControlPars
+
+00009080     242 (00009080)     Calib
+
+000090c0     243 (000090c0)     ClaState
+
+00009190     246 (00009180)     SinTable
+
+00009204     248 (00009200)     tz1
+00009206     248 (00009200)     tz2
+00009208     248 (00009200)     tz3
+0000920a     248 (00009200)     maxDeltaCur
+
+0000a488     292 (0000a480)     IsTemperatureReport
+0000a48a     292 (0000a480)     TxMsg
+0000a492     292 (0000a480)     TempMsg
+0000a49a     292 (0000a480)     StamBuf
+0000a4ac     292 (0000a480)     CfgDirty
+0000a4bd     292 (0000a480)     bcnt
+
+0000a4c0     293 (0000a4c0)     FsiTag
+0000a4c1     293 (0000a4c0)     CanId
+0000a4c2     293 (0000a4c0)     RxPutPtr
+0000a4c3     293 (0000a4c0)     TxPutPtr
+0000a4c4     293 (0000a4c0)     RxGetPtr
+0000a4c5     293 (0000a4c0)     TxGetPtr
+0000a4c6     293 (0000a4c0)     ProjId
+0000a4c7     293 (0000a4c0)     MV8
+0000a4c8     293 (0000a4c0)     MasterBlaster
+0000a4ca     293 (0000a4c0)     FlashCalib
+0000a4cc     293 (0000a4c0)     SdoMaxLenLongGlobal
+0000a4ce     293 (0000a4c0)     FloatParRevision
+0000a4d0     293 (0000a4c0)     pUIdentity
+0000a4d2     293 (0000a4c0)     pUNVParams
+0000a4d4     293 (0000a4c0)     NVParamsPassWord
+0000a4d6     293 (0000a4c0)     JtagPassCopy
+0000a4d8     293 (0000a4c0)     DBaseConf
+0000a4de     293 (0000a4c0)     FlashProg
+0000a4e4     293 (0000a4c0)     FsiRxState
+0000a4ec     293 (0000a4c0)     GRefGenPars
+
+0000a500     294 (0000a500)     TRefGenPars
+0000a50c     294 (0000a500)     HallDecode
+0000a51c     294 (0000a500)     SlaveSdo
+0000a52e     294 (0000a500)     Commutation
+
+0000a540     295 (0000a540)     IdentityProg
+
+0000a580     296 (0000a580)     CanSlaveInQueue
+
+0000a5c0     297 (0000a5c0)     CanSlaveOutQueue
+
+0000a600     298 (0000a600)     Snap
+
+0000a640     299 (0000a640)     PosPrefilter
+
+0000a680     29a (0000a680)     CalibTmp
+
+0000a6c0     29b (0000a6c0)     CalibProg
+
+0000a700     29c (0000a700)     SysTimerStr
+
+0000a780     29e (0000a780)     Correlations
+
+0000a800     2a0 (0000a800)     UartSwBuf
+
+0000a8c0     2a3 (0000a8c0)     ControlPars
+
+0000a980     2a6 (0000a980)     SysState
+
+0000acae     2b2 (0000ac80)     SlaveSdoBuf
+
+0000aeae     2ba (0000ae80)     AddSdo2BufMsg
+0000aeb6     2ba (0000ae80)     HallTable
+
+0000aec0     2bb (0000aec0)     RecorderStartFlag
+0000aec2     2bb (0000aec0)     RecorderOwnerMark
+0000aec4     2bb (0000aec0)     FarlPtr
+
+0000af00     2bc (0000af00)     Recorder
+
+0000af80     2be (0000af80)     RecorderProg
+
+0000b000     2c0 (0000b000)     Fapi_GlobalInit
+0000b006     2c0 (0000b000)     pIdRslt
+
+0000b050     2c1 (0000b040)     pFloatData
+
+0000b08a     2c2 (0000b080)     CorrFuncs
+0000b096     2c2 (0000b080)     pAtpRslt
+0000b0a2     2c2 (0000b080)     __TI_enable_exit_profile_output
+0000b0a4     2c2 (0000b080)     __TI_cleanup_ptr
+0000b0a6     2c2 (0000b080)     __TI_dtors_ptr
+0000b0a8     2c2 (0000b080)     _lock
+0000b0aa     2c2 (0000b080)     _unlock
+
+0000c000     300 (0000c000)     RecorderBuffer
+
+0000e000     380 (0000e000)     UartTxSwBuf
+
+0000e042     381 (0000e040)     UartRxSwBuf
+
+00083008    20c0 (00083000)     ProjSpecificCtl
+
+0008334c    20cd (00083340)     ParTable
+
+000835b8    20d6 (00083580)     RecorderSigRaw
+
+00083800    20e0 (00083800)     ProjSpecificData
+
+00083a3c    20e8 (00083a00)     ConfigTable
+
+00083bf4    20ef (00083bc0)     crc_ccitt_table
+
+00083cf4    20f3 (00083cc0)     ObjDictionaryItem
+
+00083da8    20f6 (00083d80)     CalibPtrTable
+
+00083e50    20f9 (00083e40)     ShortDataItem
+
+00083e8c    20fa (00083e80)     ShortDesc
+00083eb4    20fa (00083e80)     nProjSpecificData
+00083eb5    20fa (00083e80)     nProjSpecificCtl
+00083eb6    20fa (00083e80)     N_ParTable
+00083eb7    20fa (00083e80)     N_CALIB_RECS
+00083eb8    20fa (00083e80)     nConfigPars
+00083eb9    20fa (00083e80)     NREC_SIG
+00083eba    20fa (00083e80)     SizeofObjDict
+00083ebb    20fa (00083e80)     nShortData
+00083ebc    20fa (00083e80)     nFloatData
+00083ebd    20fa (00083e80)     nAtpData
+
+0009f000    27c0 (0009f000)     JtagPass
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+page  address   name                              
+----  -------   ----                              
+0     0008b6f4  ADC_setOffsetTrimAll              
+0     0008bc2e  ADC_setVREF                       
+0     0008b71c  AbortSlaveSdo                     
+0     00088a2b  ActivateProgrammedRecorder        
+0     00087f9d  AdcIsr                            
+0     000893ba  AddSdo2Buf                        
+0     0000aeae  AddSdo2BufMsg                     
+0     0008791d  AdvanceProfiler                   
+0     0008b7b8  Angle2Short                       
+0     00089039  ApplyIdentity                     
+0     0008adaa  ArmAutomaticMotorOff              
+0     0008ca12  BlockInts                         
+0     0008a38b  BlockUploadConfirmService         
+0     0008b6cb  C$$EXIT                           
+0     0008ca31  CF_Done                           
+0     0008ca32  CF_Inactive                       
+0     00089260  CF_StartTime                      
+0     0008bc4c  CF_WaitStabilize                  
+0     00088732  CF_sumCorr                        
+0     000891b0  CF_sumCorr2                       
+0     0008b792  CLA_setTriggerSource              
+0     0008b8dd  CMPSS_configFilterHigh            
+0     0008b900  CMPSS_configFilterLow             
+0     0008c826  CPUTimer_setEmulationMode         
+0     00009080  Calib                             
+0     0000a6c0  CalibProg                         
+0     00083da8  CalibPtrTable                     
+0     0000a680  CalibTmp                          
+0     0000a4c1  CanId                             
+0     000862c2  CanSlave                          
+0     0000a580  CanSlaveInQueue                   
+0     0000a5c0  CanSlaveOutQueue                  
+0     0008bdca  CenterDiffPu                      
+0     0008ae66  CfgBlockTransport                 
+0     0000a4ac  CfgDirty                          
+0     0008c089  CheckAlign                        
+0     00008826  CheckMotorReady                   
+abs   00000060  Cla1ConstLoadSize                 
+0     00084000  Cla1ConstLoadStart                
+0     00009190  Cla1ConstRunStart                 
+abs   00000b62  Cla1ProgLoadSize                  
+0     00084060  Cla1ProgLoadStart                 
+0     00008000  Cla1ProgRunStart                  
+0     00008000  Cla1Task1                         
+0     00008ab0  Cla1Task2                         
+0     0000853c  Cla1Task3                         
+0     00008b52  Cla1Task7                         
+0     00008b3a  Cla1Task8                         
+0     00008a02  ClaCheckMotorOn                   
+0     00009040  ClaControlPars                    
+0     00001500  ClaMailIn                         
+0     00001480  ClaMailOut                        
+0     000090c0  ClaState                          
+0     0008bdc3  ClearMemRpt                       
+0     0008b5fe  ClearTrip                         
+0     0000a52e  Commutation                       
+0     00083a3c  ConfigTable                       
+0     0000a8c0  ControlPars                       
+0     0008bdbc  CopyMemRpt                        
+0     0000b08a  CorrFuncs                         
+0     0000a780  Correlations                      
+0     0000a4d8  DBaseConf                         
+0     0008bde6  DMA_configAddresses               
+0     0008c399  DMA_configBurst                   
+0     00089636  DMA_configMode                    
+0     0008c201  DMA_configTransfer                
+0     0008bc6a  DMA_configWrap                    
+0     000898f9  DealBlockDloadRt                  
+0     0008b03f  DealCalibration                   
+0     0008b580  DealFaultState                    
+0     00088ddc  DecodeBhCW                        
+0     00089b0b  DecodeBhCmdValue                  
+0     0008a836  EarlyRefDecode                    
+0     0008ca29  EmptyRecorderTrigger              
+0     0000a372  EraseSector                       
+0     0008c9c4  Example_Error                     
+0     0008c4a0  ExtendCnt                         
+0     0008ca26  FMSTAT_Fail                       
+0     0008b9ad  FSI_clearRxModuleReset            
+0     0008b9ce  FSI_clearTxModuleReset            
+0     0008c33b  FSI_performRxInitialization       
+0     0008b371  FSI_performTxInitialization       
+0     0008bc88  FSI_resetRxModule                 
+0     0008bca6  FSI_resetTxModule                 
+0     0000b000  Fapi_GlobalInit                   
+0     0000a26e  Fapi_WriteReadBack                
+0     0000a0c5  Fapi_calculateEcc                 
+0     0000a199  Fapi_calculateFletcherChecksum    
+0     0000a2a5  Fapi_calculateOtpChecksum         
+0     0000a297  Fapi_checkFsmForReady             
+0     00009edf  Fapi_checkRegionForValue          
+0     00009fd3  Fapi_configureFMAC                
+0     0000a1c5  Fapi_divideUnsignedLong           
+0     00009e63  Fapi_doBlankCheck                 
+0     0000a288  Fapi_doVerify                     
+0     0000a235  Fapi_flushPipeline                
+0     0000a2bd  Fapi_getFsmStatus                 
+0     0000a136  Fapi_initializeAPI                
+0     0000a1f1  Fapi_isAddressEcc                 
+0     0000a08a  Fapi_isAddressValid               
+0     0000a215  Fapi_issueAsyncCommand            
+0     00009de3  Fapi_issueAsyncCommandWithAddress 
+0     0000a034  Fapi_issueFsmCommand              
+0     00009b7b  Fapi_issueProgrammingCommand      
+0     00009f59  Fapi_loopRegionForValue           
+0     0000a2b2  Fapi_scaleCycleValues             
+0     0000a0ff  Fapi_setActiveFlashBank           
+0     0000a168  Fapi_setupBankSectorEnable        
+0     0000a252  Fapi_setupSectorsForWrite         
+0     0000aec4  FarlPtr                           
+0     0008c6d9  FlagRecorderTrigger               
+0     0000a4ca  FlashCalib                        
+0     0000a4de  FlashProg                         
+0     0000a3a8  Flash_initModule                  
+0     0000a4ce  FloatParRevision                  
+0     0008c217  FlushCanQueues                    
+0     00085c88  FsiRtService                      
+0     0000a4e4  FsiRxState                        
+0     0000a4c0  FsiTag                            
+0     0008b76b  GPIO_setDirectionMode             
+0     0008ab04  GPIO_setPadConfig                 
+0     0008b076  GPIO_setPinConfig                 
+0     0008b3f8  GPIO_setQualificationMode         
+0     0000a4ec  GRefGenPars                       
+0     00009000  Geom                              
+0     0008be02  GetAtpData                        
+0     0008b11b  GetCalibCmd                       
+0     00087d29  GetCommAnglePu                    
+0     0008ae28  GetConfigPar                      
+0     00089a07  GetCurrentCmdForSpeedErr          
+0     0008b151  GetDynIdentification              
+0     0008b186  GetFSignalPtr                     
+0     0008be1e  GetFloatData                      
+0     0008b7dd  GetFloatPar                       
+0     0008a9d1  GetFwCmd                          
+0     000880d0  GetHallComm                       
+0     00089b8c  GetIdentityCmd                    
+0     0008c7a5  GetManufacturerSpecificCode       
+0     00088522  GetMiscTest                       
+0     0008be8e  GetMotionPar                      
+0     0008b4d4  GetObjIndex                       
+0     0008ca16  GetOdSize                         
+0     0008b627  GetOperationMode                  
+0     0008b006  GetParIndex                       
+0     0008b342  GetParamCmd                       
+0     0008c327  GetPeakCurrentPromils             
+0     0008c7b0  GetPlaceInMessageQueue            
+0     0008bea9  GetRatedCurrent                   
+0     00086870  GetRecorder                       
+0     0008ade9  GetRecorderCRC                    
+0     0008c3e0  GetRecorderStat                   
+0     0008b969  GetRemainTimeSec                  
+0     0008c283  GetSamplingTime                   
+0     0008bd1e  GetShortData                      
+0     0008a567  GetSignal                         
+0     0008b802  GetSignalFlags                    
+0     0008c34e  GetSinCorrelation                 
+0     00087486  GetSpeedCmdForPerr                
+0     0008c86c  GetTemperatureFromAdc             
+0     0008bdae  GetUnalignedFloat                 
+0     0008bdae  GetUnalignedLong                  
+0     0000a50c  HallDecode                        
+0     0000aeb6  HallTable                         
+0     000872a4  HomeProfiler                      
+0     0008b9ef  HomingHere                        
+0     0000a540  IdentityProg                      
+0     00085faf  IdleCbit                          
+0     00089f51  IdleLoop                          
+0     0008af58  ImmediateHoming                   
+0     0008c9ca  ImmediateRecorderTrigger          
+0     00088419  InitAppData                       
+0     00087630  InitControlFilter                 
+0     000870bf  InitControlParams                 
+0     0008c9d0  InitFsiService                    
+0     0008c9a1  InitHallModule                    
+0     0008a3eb  InitHomingProc                    
+0     0008b923  InitLinService                    
+0     0008a620  InitPeripherals                   
+0     0008c0b9  InitPosPrefilter                  
+0     0008aca2  InitRecorder                      
+0     0008ba93  InitSystemTimer                   
+0     0008b424  InitTimeOuts                      
+0     0008aa1f  Interrupt_disable                 
+0     0008b0ad  Interrupt_enable                  
+0     0008aea3  Interrupt_initModule              
+0     0008bcc4  Interrupt_initVectorTable         
+0     0008ca1a  IsBufferUsedForProgramming        
+0     0008c543  IsDin1                            
+0     0008c551  IsDin2                            
+0     0008b4ff  IsInRange                         
+0     0008c361  IsResetBlocked                    
+0     0008ba10  IsSysTimerElapse                  
+0     0000a488  IsTemperatureReport               
+0     0009f000  JtagPass                          
+0     0000a4d6  JtagPassCopy                      
+0     0008b871  KillCLA                           
+0     0008b827  KillMotor                         
+0     0008a1f1  LIN_initModule                    
+0     00089871  LogException                      
+0     0008abd7  LogI2t                            
+0     0008c5f2  MCAN_getOpMode                    
+0     0008c4eb  MCAN_setOpMode                    
+0     0000a4c7  MV8                               
+0     0008a44b  ManageAutomaticBrakeEngage        
+0     0008a03b  ManageBrakeEngage                 
+0     0008b450  ManageBrakeRelease                
+0     0000a4c8  MasterBlaster                     
+0     0008b650  MemCfg_setLSRAMMasterSel          
+0     0008bdb6  MemClr                            
+0     0008a7df  MotorHoldSeq                      
+0     0008830e  MotorOffSeq                       
+0     000865a7  MotorOnSeq                        
+0     00083eb9  NREC_SIG                          
+0     0000a4d4  NVParamsPassWord                  
+0     00083eb7  N_CALIB_RECS                      
+0     00083eb6  N_ParTable                        
+0     0008c9a8  NoSuchGetObject                   
+0     0008c9af  NoSuchSetObject                   
+0     00083cf4  ObjDictionaryItem                 
+0     0008b679  OutBrakeVolts                     
+0     00087a84  PTRunTimeDriver                   
+0     0008334c  ParTable                          
+0     0008c5ff  PauseInts                         
+0     00089503  PosManageAutomaticBrakeEngage     
+0     000895a1  PosPref                           
+0     0000a640  PosPrefilter                      
+0     0008ac1b  PosPrefilterMotorOff              
+0     0008a186  PosPrefilterMotorOn               
+0     0000a3f7  PrepFlash4Burn                    
+0     00008b04  ProcAnalogSamples                 
+0     000896ca  ProcessEncoderData                
+0     0008a67b  ProfileToStop                     
+0     0000a2c4  ProgramPageAutoECC                
+0     0000a4c6  ProjId                            
+0     00083008  ProjSpecificCtl                   
+0     00083800  ProjSpecificData                  
+0     0008b39e  Put2TxBuf                         
+0     0008ab92  PutCanSlaveQueue                  
+0     00088c07  RTDealBlockUpload                 
+0     00085c88  RamfuncsLoadEnd                   
+abs   00000c88  RamfuncsLoadSize                  
+0     00085000  RamfuncsLoadStart                 
+0     0000a488  RamfuncsRunEnd                    
+abs   00000c88  RamfuncsRunSize                   
+0     00009800  RamfuncsRunStart                  
+0     0008a88c  ReadCalibFromFlash                
+0     0000af00  Recorder                          
+0     0000c000  RecorderBuffer                    
+0     0008bab3  RecorderDnFloatTrigger            
+0     0008bec4  RecorderDnLTrigger                
+0     0008bedf  RecorderDnLuTrigger               
+0     0008befa  RecorderDnSTrigger                
+0     0008bf15  RecorderDnSuTrigger               
+0     0008bad3  RecorderEqFloatTrigger            
+0     0008bf30  RecorderEqLTrigger                
+0     0008bf4b  RecorderEqLuTrigger               
+0     0008bf66  RecorderEqSTrigger                
+0     0008be3a  RecorderEqSuTrigger               
+0     0000aec2  RecorderOwnerMark                 
+0     0000af80  RecorderProg                      
+0     000835b8  RecorderSigRaw                    
+0     0000aec0  RecorderStartFlag                 
+0     0008baf3  RecorderUpFloatTrigger            
+0     0008bf81  RecorderUpLTrigger                
+0     0008bf9c  RecorderUpLuTrigger               
+0     0008bfb7  RecorderUpSTrigger                
+0     0008bfd2  RecorderUpSuTrigger               
+0     00088b1b  RefGen                            
+0     0008ace4  ResetConfigPars                   
+0     0008c454  ResetCpu                          
+0     0008ca1e  ResetHardwareSysTimer             
+0     0008b47c  ResetProfiler                     
+0     0008c243  ResetRefGens                      
+0     0008bb93  ResetSpeedController              
+0     0008c9e2  RestoreInts                       
+0     00086cd0  RtCanService                      
+0     0008a5c4  RtRecorder                        
+0     0008b1ec  RunBiquads                        
+0     0000a4c4  RxGetPtr                          
+0     0000a4c2  RxPutPtr                          
+0     0008be56  SafeEraseFlash                    
+0     0008b895  SafePrepFlash                     
+0     0008bb13  SafeProgramFlash                  
+0     0008c022  SafeSetMotorOff                   
+0     0000a4cc  SdoMaxLenLongGlobal               
+0     0008aee0  SetAbsPosition                    
+0     0008a6d5  SetAdcMux                         
+0     0008ab4c  SetAxisByIdVolts                  
+0     0008ba31  SetBHControlWord                  
+0     0008c2ad  SetBootUpMessage                  
+0     00087e67  SetCalibCmd                       
+0     0008b8b9  SetClaAllSw                       
+0     00089980  SetConfigPar                      
+0     0008b21e  SetControlWord                    
+0     00089d00  SetDynIdentification              
+0     0008bb33  SetExtendedBootUpMessage          
+0     0008ba52  SetFloatData                      
+0     0008aabb  SetFloatPar                       
+0     0008930f  SetFwCmd                          
+0     0008c4fa  SetGateDriveEable                 
+0     0008c9e8  SetHaltOptionCode                 
+0     0008c0e9  SetHomingMethod                   
+0     00088f71  SetIdentityCmd                    
+0     00089def  SetLoopClosureMode                
+0     00086aad  SetMiscTest                       
+0     0008a982  SetMotionCommandLimits            
+0     00088cf2  SetMotionPar                      
+0     0008b3cb  SetMotorOff                       
+0     00088932  SetMotorOn                        
+0     0008a2c1  SetMsg2HW                         
+0     0008a72f  SetOperationMode                  
+0     000881ef  SetParamCmd                       
+0     0008c9ee  SetPdo1RxParam                    
+0     0008c9f4  SetPdo1TxParam                    
+0     0008c9fa  SetPdo2TxParam                    
+0     0008bd3b  SetPositionTarget                 
+0     0008b1b9  SetProjectId                      
+0     00086ecb  SetProjectSpecificData            
+0     0008ca00  SetQuickStopOptionCode            
+0     000877b4  SetRecorder                       
+0     00089461  SetReferenceMode                  
+0     0008aa6d  SetShortData                      
+0     0008a328  SetSignal                         
+0     0008ca06  SetSyncArrivalTime                
+0     0008bbb2  SetSysTimerTarget                 
+0     0008b5aa  SetSysTimerTargetSec              
+0     00089759  SetSystemMode                     
+0     00088ea8  SetupADCs                         
+0     0008b282  SetupFSI                          
+0     0008a259  SetupIsr                          
+0     00089a89  SetupPWM                          
+0     000897e8  SetupPeripheralClks               
+0     00089d78  SetupPwmPacer                     
+0     0008a8de  SetupTimers                       
+0     00083e50  ShortDataItem                     
+0     00083e8c  ShortDesc                         
+0     00009190  SinTable                          
+0     0008ad26  SingleCmpss                       
+0     00083eba  SizeofObjDict                     
+0     0000a51c  SlaveSdo                          
+0     0000acae  SlaveSdoBuf                       
+0     0008bbd1  SlaveSdoConfirmInitDload          
+0     0008ad68  SlaveSdoConfirmInitDloadBlock     
+0     0008b0e4  SlaveSdoConfirmInitUploadBlock    
+0     0008b6a2  SlaveSdoConfirmInitUploadExpedit  
+0     0008bb53  SlaveSdoConfirmInitUploadSegmented
+0     0008c2c2  SlaveSdoEndOfBlock                
+0     0008bce2  SlaveSdoEndOfSubBlock             
+0     00089e65  SlaveSdoUploadSegmented           
+0     0000a600  Snap                              
+0     0008b98b  SnapIt                            
+0     0008b2b3  SpeedProfiler                     
+0     0000a49a  StamBuf                           
+0     0008a930  Steering2WheelCorrection          
+0     0008a0ad  StepFilt                          
+0     0000a484  SysCtl_delay                      
+0     00088835  SysCtl_isPLLValid                 
+0     0008b250  SysCtl_selectOscSource            
+0     0008b52a  SysCtl_selectXTAL                 
+0     0008c03c  SysCtl_selectXTALSingleEnded      
+0     0008862a  SysCtl_setClock                   
+0     0000a980  SysState                          
+0     0000a700  SysTimerStr                       
+0     0000a500  TRefGenPars                       
+0     0000a492  TempMsg                           
+0     0008af92  TestCfgPar                        
+0     0008afcc  TestCfgProgramming                
+0     00089c0a  TestEncoderMatching               
+0     0008c119  TestFlashAddress                  
+0     000890ff  Timer0Interrupt                   
+0     0008bbf0  TransmitTxBuf                     
+0     0000a4c5  TxGetPtr                          
+0     0000a48a  TxMsg                             
+0     0000a4c3  TxPutPtr                          
+0     0000e042  UartRxSwBuf                       
+0     0008a4aa  UartService                       
+0     0000a800  UartSwBuf                         
+0     0000e000  UartTxSwBuf                       
+0     0008c57b  UnpauseInts                       
+0     0008c056  UpdateSysTimer                    
+0     0008bfed  WaitStam                          
+0     0008bd58  WaitStamSec                       
+0     0008c8a8  WaitUsec                          
+0     00083fc4  __TI_CINIT_Base                   
+0     00083fe4  __TI_CINIT_Limit                  
+0     00083fe4  __TI_CINIT_Warm                   
+0     00083fa2  __TI_Handler_Table_Base           
+0     00083fa8  __TI_Handler_Table_Limit          
+0     00000500  __TI_STACK_END                    
+abs   00000100  __TI_STACK_SIZE                   
+0     0008b555  __TI_auto_init_nobinit_nopinit    
+0     0000b0a4  __TI_cleanup_ptr                  
+0     0008b2e3  __TI_decompress_lzss              
+0     0008c97c  __TI_decompress_none              
+0     0000b0a6  __TI_dtors_ptr                    
+0     0000b0a2  __TI_enable_exit_profile_output   
+abs   ffffffff  __TI_pprof_out_hndl               
+abs   ffffffff  __TI_prof_data_size               
+abs   ffffffff  __TI_prof_data_start              
+0     0008ca0c  __TI_zero_init                    
+0     0008bd00  __c28xabi_cmpll                   
+0     0008bd12  __c28xabi_cmpull                  
+0     0008c7fd  __c28xabi_divu                    
+0     0008b84c  __c28xabi_ftoull                  
+0     0008bb73  __c28xabi_lltof                   
+0     0008c802  __c28xabi_modu                    
+0     0008c413  __c28xabi_ulltof                  
+n/a   UNDEFED   __c_args__                        
+0     0008c131  __isnanf                          
+0     0008c942  __relaxed_sqrtf                   
+0     00000400  __stack                           
+0     0008c715  _args_main                        
+0     0008c1ea  _c_int00                          
+0     0000b0a8  _lock                             
+0     0008c953  _nop                              
+0     0008c94f  _register_lock                    
+0     0008c94b  _register_unlock                  
+0     0008ca33  _system_post_cinit                
+0     0008ca2f  _system_pre_init                  
+0     0000b0aa  _unlock                           
+0     0008b6cb  abort                             
+0     0000a4bd  bcnt                              
+0     00083000  code_start                        
+0     0008c589  crc_ccitt_byte                    
+0     00083bf4  crc_ccitt_table                   
+0     0008b6cd  exit                              
+0     0008c518  fSat                              
+0     0008bc0f  fSatNanProt                       
+0     0008b4a8  initCLA                           
+0     0008ac5f  initCLAMemory                     
+0     0008af1c  main                              
+0     0000920a  maxDeltaCur                       
+0     0008bd75  memcpy                            
+0     0008c9bd  memset                            
+0     00083ebd  nAtpData                          
+0     00083eb8  nConfigPars                       
+0     00083ebc  nFloatData                        
+0     00083eb5  nProjSpecificCtl                  
+0     00083eb4  nProjSpecificData                 
+0     00083ebb  nShortData                        
+0     0000b096  pAtpRslt                          
+0     0000b050  pFloatData                        
+0     0000b006  pIdRslt                           
+0     0000a4d0  pUIdentity                        
+0     0000a4d2  pUNVParams                        
+0     0008a787  setupCMPSSs                       
+0     00089edb  setupDMA                          
+0     0008be72  setupEcap                         
+0     00087be2  setupGpio                         
+0     0008ca34  setupHallInputs                   
+0     0008b5d4  setupLin                          
+0     00089fc6  setupPwmParams                    
+0     0008a509  setupSync                         
+0     00009204  tz1                               
+0     00009206  tz2                               
+0     00009208  tz3                               
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+page  address   name                              
+----  -------   ----                              
+0     00000400  __stack                           
+0     00000500  __TI_STACK_END                    
+0     00001480  ClaMailOut                        
+0     00001500  ClaMailIn                         
+0     00008000  Cla1ProgRunStart                  
+0     00008000  Cla1Task1                         
+0     0000853c  Cla1Task3                         
+0     00008826  CheckMotorReady                   
+0     00008a02  ClaCheckMotorOn                   
+0     00008ab0  Cla1Task2                         
+0     00008b04  ProcAnalogSamples                 
+0     00008b3a  Cla1Task8                         
+0     00008b52  Cla1Task7                         
+0     00009000  Geom                              
+0     00009040  ClaControlPars                    
+0     00009080  Calib                             
+0     000090c0  ClaState                          
+0     00009190  Cla1ConstRunStart                 
+0     00009190  SinTable                          
+0     00009204  tz1                               
+0     00009206  tz2                               
+0     00009208  tz3                               
+0     0000920a  maxDeltaCur                       
+0     00009800  RamfuncsRunStart                  
+0     00009b7b  Fapi_issueProgrammingCommand      
+0     00009de3  Fapi_issueAsyncCommandWithAddress 
+0     00009e63  Fapi_doBlankCheck                 
+0     00009edf  Fapi_checkRegionForValue          
+0     00009f59  Fapi_loopRegionForValue           
+0     00009fd3  Fapi_configureFMAC                
+0     0000a034  Fapi_issueFsmCommand              
+0     0000a08a  Fapi_isAddressValid               
+0     0000a0c5  Fapi_calculateEcc                 
+0     0000a0ff  Fapi_setActiveFlashBank           
+0     0000a136  Fapi_initializeAPI                
+0     0000a168  Fapi_setupBankSectorEnable        
+0     0000a199  Fapi_calculateFletcherChecksum    
+0     0000a1c5  Fapi_divideUnsignedLong           
+0     0000a1f1  Fapi_isAddressEcc                 
+0     0000a215  Fapi_issueAsyncCommand            
+0     0000a235  Fapi_flushPipeline                
+0     0000a252  Fapi_setupSectorsForWrite         
+0     0000a26e  Fapi_WriteReadBack                
+0     0000a288  Fapi_doVerify                     
+0     0000a297  Fapi_checkFsmForReady             
+0     0000a2a5  Fapi_calculateOtpChecksum         
+0     0000a2b2  Fapi_scaleCycleValues             
+0     0000a2bd  Fapi_getFsmStatus                 
+0     0000a2c4  ProgramPageAutoECC                
+0     0000a372  EraseSector                       
+0     0000a3a8  Flash_initModule                  
+0     0000a3f7  PrepFlash4Burn                    
+0     0000a484  SysCtl_delay                      
+0     0000a488  IsTemperatureReport               
+0     0000a488  RamfuncsRunEnd                    
+0     0000a48a  TxMsg                             
+0     0000a492  TempMsg                           
+0     0000a49a  StamBuf                           
+0     0000a4ac  CfgDirty                          
+0     0000a4bd  bcnt                              
+0     0000a4c0  FsiTag                            
+0     0000a4c1  CanId                             
+0     0000a4c2  RxPutPtr                          
+0     0000a4c3  TxPutPtr                          
+0     0000a4c4  RxGetPtr                          
+0     0000a4c5  TxGetPtr                          
+0     0000a4c6  ProjId                            
+0     0000a4c7  MV8                               
+0     0000a4c8  MasterBlaster                     
+0     0000a4ca  FlashCalib                        
+0     0000a4cc  SdoMaxLenLongGlobal               
+0     0000a4ce  FloatParRevision                  
+0     0000a4d0  pUIdentity                        
+0     0000a4d2  pUNVParams                        
+0     0000a4d4  NVParamsPassWord                  
+0     0000a4d6  JtagPassCopy                      
+0     0000a4d8  DBaseConf                         
+0     0000a4de  FlashProg                         
+0     0000a4e4  FsiRxState                        
+0     0000a4ec  GRefGenPars                       
+0     0000a500  TRefGenPars                       
+0     0000a50c  HallDecode                        
+0     0000a51c  SlaveSdo                          
+0     0000a52e  Commutation                       
+0     0000a540  IdentityProg                      
+0     0000a580  CanSlaveInQueue                   
+0     0000a5c0  CanSlaveOutQueue                  
+0     0000a600  Snap                              
+0     0000a640  PosPrefilter                      
+0     0000a680  CalibTmp                          
+0     0000a6c0  CalibProg                         
+0     0000a700  SysTimerStr                       
+0     0000a780  Correlations                      
+0     0000a800  UartSwBuf                         
+0     0000a8c0  ControlPars                       
+0     0000a980  SysState                          
+0     0000acae  SlaveSdoBuf                       
+0     0000aeae  AddSdo2BufMsg                     
+0     0000aeb6  HallTable                         
+0     0000aec0  RecorderStartFlag                 
+0     0000aec2  RecorderOwnerMark                 
+0     0000aec4  FarlPtr                           
+0     0000af00  Recorder                          
+0     0000af80  RecorderProg                      
+0     0000b000  Fapi_GlobalInit                   
+0     0000b006  pIdRslt                           
+0     0000b050  pFloatData                        
+0     0000b08a  CorrFuncs                         
+0     0000b096  pAtpRslt                          
+0     0000b0a2  __TI_enable_exit_profile_output   
+0     0000b0a4  __TI_cleanup_ptr                  
+0     0000b0a6  __TI_dtors_ptr                    
+0     0000b0a8  _lock                             
+0     0000b0aa  _unlock                           
+0     0000c000  RecorderBuffer                    
+0     0000e000  UartTxSwBuf                       
+0     0000e042  UartRxSwBuf                       
+0     00083000  code_start                        
+0     00083008  ProjSpecificCtl                   
+0     0008334c  ParTable                          
+0     000835b8  RecorderSigRaw                    
+0     00083800  ProjSpecificData                  
+0     00083a3c  ConfigTable                       
+0     00083bf4  crc_ccitt_table                   
+0     00083cf4  ObjDictionaryItem                 
+0     00083da8  CalibPtrTable                     
+0     00083e50  ShortDataItem                     
+0     00083e8c  ShortDesc                         
+0     00083eb4  nProjSpecificData                 
+0     00083eb5  nProjSpecificCtl                  
+0     00083eb6  N_ParTable                        
+0     00083eb7  N_CALIB_RECS                      
+0     00083eb8  nConfigPars                       
+0     00083eb9  NREC_SIG                          
+0     00083eba  SizeofObjDict                     
+0     00083ebb  nShortData                        
+0     00083ebc  nFloatData                        
+0     00083ebd  nAtpData                          
+0     00083fa2  __TI_Handler_Table_Base           
+0     00083fa8  __TI_Handler_Table_Limit          
+0     00083fc4  __TI_CINIT_Base                   
+0     00083fe4  __TI_CINIT_Limit                  
+0     00083fe4  __TI_CINIT_Warm                   
+0     00084000  Cla1ConstLoadStart                
+0     00084060  Cla1ProgLoadStart                 
+0     00085000  RamfuncsLoadStart                 
+0     00085c88  FsiRtService                      
+0     00085c88  RamfuncsLoadEnd                   
+0     00085faf  IdleCbit                          
+0     000862c2  CanSlave                          
+0     000865a7  MotorOnSeq                        
+0     00086870  GetRecorder                       
+0     00086aad  SetMiscTest                       
+0     00086cd0  RtCanService                      
+0     00086ecb  SetProjectSpecificData            
+0     000870bf  InitControlParams                 
+0     000872a4  HomeProfiler                      
+0     00087486  GetSpeedCmdForPerr                
+0     00087630  InitControlFilter                 
+0     000877b4  SetRecorder                       
+0     0008791d  AdvanceProfiler                   
+0     00087a84  PTRunTimeDriver                   
+0     00087be2  setupGpio                         
+0     00087d29  GetCommAnglePu                    
+0     00087e67  SetCalibCmd                       
+0     00087f9d  AdcIsr                            
+0     000880d0  GetHallComm                       
+0     000881ef  SetParamCmd                       
+0     0008830e  MotorOffSeq                       
+0     00088419  InitAppData                       
+0     00088522  GetMiscTest                       
+0     0008862a  SysCtl_setClock                   
+0     00088732  CF_sumCorr                        
+0     00088835  SysCtl_isPLLValid                 
+0     00088932  SetMotorOn                        
+0     00088a2b  ActivateProgrammedRecorder        
+0     00088b1b  RefGen                            
+0     00088c07  RTDealBlockUpload                 
+0     00088cf2  SetMotionPar                      
+0     00088ddc  DecodeBhCW                        
+0     00088ea8  SetupADCs                         
+0     00088f71  SetIdentityCmd                    
+0     00089039  ApplyIdentity                     
+0     000890ff  Timer0Interrupt                   
+0     000891b0  CF_sumCorr2                       
+0     00089260  CF_StartTime                      
+0     0008930f  SetFwCmd                          
+0     000893ba  AddSdo2Buf                        
+0     00089461  SetReferenceMode                  
+0     00089503  PosManageAutomaticBrakeEngage     
+0     000895a1  PosPref                           
+0     00089636  DMA_configMode                    
+0     000896ca  ProcessEncoderData                
+0     00089759  SetSystemMode                     
+0     000897e8  SetupPeripheralClks               
+0     00089871  LogException                      
+0     000898f9  DealBlockDloadRt                  
+0     00089980  SetConfigPar                      
+0     00089a07  GetCurrentCmdForSpeedErr          
+0     00089a89  SetupPWM                          
+0     00089b0b  DecodeBhCmdValue                  
+0     00089b8c  GetIdentityCmd                    
+0     00089c0a  TestEncoderMatching               
+0     00089d00  SetDynIdentification              
+0     00089d78  SetupPwmPacer                     
+0     00089def  SetLoopClosureMode                
+0     00089e65  SlaveSdoUploadSegmented           
+0     00089edb  setupDMA                          
+0     00089f51  IdleLoop                          
+0     00089fc6  setupPwmParams                    
+0     0008a03b  ManageBrakeEngage                 
+0     0008a0ad  StepFilt                          
+0     0008a186  PosPrefilterMotorOn               
+0     0008a1f1  LIN_initModule                    
+0     0008a259  SetupIsr                          
+0     0008a2c1  SetMsg2HW                         
+0     0008a328  SetSignal                         
+0     0008a38b  BlockUploadConfirmService         
+0     0008a3eb  InitHomingProc                    
+0     0008a44b  ManageAutomaticBrakeEngage        
+0     0008a4aa  UartService                       
+0     0008a509  setupSync                         
+0     0008a567  GetSignal                         
+0     0008a5c4  RtRecorder                        
+0     0008a620  InitPeripherals                   
+0     0008a67b  ProfileToStop                     
+0     0008a6d5  SetAdcMux                         
+0     0008a72f  SetOperationMode                  
+0     0008a787  setupCMPSSs                       
+0     0008a7df  MotorHoldSeq                      
+0     0008a836  EarlyRefDecode                    
+0     0008a88c  ReadCalibFromFlash                
+0     0008a8de  SetupTimers                       
+0     0008a930  Steering2WheelCorrection          
+0     0008a982  SetMotionCommandLimits            
+0     0008a9d1  GetFwCmd                          
+0     0008aa1f  Interrupt_disable                 
+0     0008aa6d  SetShortData                      
+0     0008aabb  SetFloatPar                       
+0     0008ab04  GPIO_setPadConfig                 
+0     0008ab4c  SetAxisByIdVolts                  
+0     0008ab92  PutCanSlaveQueue                  
+0     0008abd7  LogI2t                            
+0     0008ac1b  PosPrefilterMotorOff              
+0     0008ac5f  initCLAMemory                     
+0     0008aca2  InitRecorder                      
+0     0008ace4  ResetConfigPars                   
+0     0008ad26  SingleCmpss                       
+0     0008ad68  SlaveSdoConfirmInitDloadBlock     
+0     0008adaa  ArmAutomaticMotorOff              
+0     0008ade9  GetRecorderCRC                    
+0     0008ae28  GetConfigPar                      
+0     0008ae66  CfgBlockTransport                 
+0     0008aea3  Interrupt_initModule              
+0     0008aee0  SetAbsPosition                    
+0     0008af1c  main                              
+0     0008af58  ImmediateHoming                   
+0     0008af92  TestCfgPar                        
+0     0008afcc  TestCfgProgramming                
+0     0008b006  GetParIndex                       
+0     0008b03f  DealCalibration                   
+0     0008b076  GPIO_setPinConfig                 
+0     0008b0ad  Interrupt_enable                  
+0     0008b0e4  SlaveSdoConfirmInitUploadBlock    
+0     0008b11b  GetCalibCmd                       
+0     0008b151  GetDynIdentification              
+0     0008b186  GetFSignalPtr                     
+0     0008b1b9  SetProjectId                      
+0     0008b1ec  RunBiquads                        
+0     0008b21e  SetControlWord                    
+0     0008b250  SysCtl_selectOscSource            
+0     0008b282  SetupFSI                          
+0     0008b2b3  SpeedProfiler                     
+0     0008b2e3  __TI_decompress_lzss              
+0     0008b342  GetParamCmd                       
+0     0008b371  FSI_performTxInitialization       
+0     0008b39e  Put2TxBuf                         
+0     0008b3cb  SetMotorOff                       
+0     0008b3f8  GPIO_setQualificationMode         
+0     0008b424  InitTimeOuts                      
+0     0008b450  ManageBrakeRelease                
+0     0008b47c  ResetProfiler                     
+0     0008b4a8  initCLA                           
+0     0008b4d4  GetObjIndex                       
+0     0008b4ff  IsInRange                         
+0     0008b52a  SysCtl_selectXTAL                 
+0     0008b555  __TI_auto_init_nobinit_nopinit    
+0     0008b580  DealFaultState                    
+0     0008b5aa  SetSysTimerTargetSec              
+0     0008b5d4  setupLin                          
+0     0008b5fe  ClearTrip                         
+0     0008b627  GetOperationMode                  
+0     0008b650  MemCfg_setLSRAMMasterSel          
+0     0008b679  OutBrakeVolts                     
+0     0008b6a2  SlaveSdoConfirmInitUploadExpedit  
+0     0008b6cb  C$$EXIT                           
+0     0008b6cb  abort                             
+0     0008b6cd  exit                              
+0     0008b6f4  ADC_setOffsetTrimAll              
+0     0008b71c  AbortSlaveSdo                     
+0     0008b76b  GPIO_setDirectionMode             
+0     0008b792  CLA_setTriggerSource              
+0     0008b7b8  Angle2Short                       
+0     0008b7dd  GetFloatPar                       
+0     0008b802  GetSignalFlags                    
+0     0008b827  KillMotor                         
+0     0008b84c  __c28xabi_ftoull                  
+0     0008b871  KillCLA                           
+0     0008b895  SafePrepFlash                     
+0     0008b8b9  SetClaAllSw                       
+0     0008b8dd  CMPSS_configFilterHigh            
+0     0008b900  CMPSS_configFilterLow             
+0     0008b923  InitLinService                    
+0     0008b969  GetRemainTimeSec                  
+0     0008b98b  SnapIt                            
+0     0008b9ad  FSI_clearRxModuleReset            
+0     0008b9ce  FSI_clearTxModuleReset            
+0     0008b9ef  HomingHere                        
+0     0008ba10  IsSysTimerElapse                  
+0     0008ba31  SetBHControlWord                  
+0     0008ba52  SetFloatData                      
+0     0008ba93  InitSystemTimer                   
+0     0008bab3  RecorderDnFloatTrigger            
+0     0008bad3  RecorderEqFloatTrigger            
+0     0008baf3  RecorderUpFloatTrigger            
+0     0008bb13  SafeProgramFlash                  
+0     0008bb33  SetExtendedBootUpMessage          
+0     0008bb53  SlaveSdoConfirmInitUploadSegmented
+0     0008bb73  __c28xabi_lltof                   
+0     0008bb93  ResetSpeedController              
+0     0008bbb2  SetSysTimerTarget                 
+0     0008bbd1  SlaveSdoConfirmInitDload          
+0     0008bbf0  TransmitTxBuf                     
+0     0008bc0f  fSatNanProt                       
+0     0008bc2e  ADC_setVREF                       
+0     0008bc4c  CF_WaitStabilize                  
+0     0008bc6a  DMA_configWrap                    
+0     0008bc88  FSI_resetRxModule                 
+0     0008bca6  FSI_resetTxModule                 
+0     0008bcc4  Interrupt_initVectorTable         
+0     0008bce2  SlaveSdoEndOfSubBlock             
+0     0008bd00  __c28xabi_cmpll                   
+0     0008bd12  __c28xabi_cmpull                  
+0     0008bd1e  GetShortData                      
+0     0008bd3b  SetPositionTarget                 
+0     0008bd58  WaitStamSec                       
+0     0008bd75  memcpy                            
+0     0008bdae  GetUnalignedFloat                 
+0     0008bdae  GetUnalignedLong                  
+0     0008bdb6  MemClr                            
+0     0008bdbc  CopyMemRpt                        
+0     0008bdc3  ClearMemRpt                       
+0     0008bdca  CenterDiffPu                      
+0     0008bde6  DMA_configAddresses               
+0     0008be02  GetAtpData                        
+0     0008be1e  GetFloatData                      
+0     0008be3a  RecorderEqSuTrigger               
+0     0008be56  SafeEraseFlash                    
+0     0008be72  setupEcap                         
+0     0008be8e  GetMotionPar                      
+0     0008bea9  GetRatedCurrent                   
+0     0008bec4  RecorderDnLTrigger                
+0     0008bedf  RecorderDnLuTrigger               
+0     0008befa  RecorderDnSTrigger                
+0     0008bf15  RecorderDnSuTrigger               
+0     0008bf30  RecorderEqLTrigger                
+0     0008bf4b  RecorderEqLuTrigger               
+0     0008bf66  RecorderEqSTrigger                
+0     0008bf81  RecorderUpLTrigger                
+0     0008bf9c  RecorderUpLuTrigger               
+0     0008bfb7  RecorderUpSTrigger                
+0     0008bfd2  RecorderUpSuTrigger               
+0     0008bfed  WaitStam                          
+0     0008c022  SafeSetMotorOff                   
+0     0008c03c  SysCtl_selectXTALSingleEnded      
+0     0008c056  UpdateSysTimer                    
+0     0008c089  CheckAlign                        
+0     0008c0b9  InitPosPrefilter                  
+0     0008c0e9  SetHomingMethod                   
+0     0008c119  TestFlashAddress                  
+0     0008c131  __isnanf                          
+0     0008c1ea  _c_int00                          
+0     0008c201  DMA_configTransfer                
+0     0008c217  FlushCanQueues                    
+0     0008c243  ResetRefGens                      
+0     0008c283  GetSamplingTime                   
+0     0008c2ad  SetBootUpMessage                  
+0     0008c2c2  SlaveSdoEndOfBlock                
+0     0008c327  GetPeakCurrentPromils             
+0     0008c33b  FSI_performRxInitialization       
+0     0008c34e  GetSinCorrelation                 
+0     0008c361  IsResetBlocked                    
+0     0008c399  DMA_configBurst                   
+0     0008c3e0  GetRecorderStat                   
+0     0008c413  __c28xabi_ulltof                  
+0     0008c454  ResetCpu                          
+0     0008c4a0  ExtendCnt                         
+0     0008c4eb  MCAN_setOpMode                    
+0     0008c4fa  SetGateDriveEable                 
+0     0008c518  fSat                              
+0     0008c543  IsDin1                            
+0     0008c551  IsDin2                            
+0     0008c57b  UnpauseInts                       
+0     0008c589  crc_ccitt_byte                    
+0     0008c5f2  MCAN_getOpMode                    
+0     0008c5ff  PauseInts                         
+0     0008c6d9  FlagRecorderTrigger               
+0     0008c715  _args_main                        
+0     0008c7a5  GetManufacturerSpecificCode       
+0     0008c7b0  GetPlaceInMessageQueue            
+0     0008c7fd  __c28xabi_divu                    
+0     0008c802  __c28xabi_modu                    
+0     0008c826  CPUTimer_setEmulationMode         
+0     0008c86c  GetTemperatureFromAdc             
+0     0008c8a8  WaitUsec                          
+0     0008c942  __relaxed_sqrtf                   
+0     0008c94b  _register_unlock                  
+0     0008c94f  _register_lock                    
+0     0008c953  _nop                              
+0     0008c97c  __TI_decompress_none              
+0     0008c9a1  InitHallModule                    
+0     0008c9a8  NoSuchGetObject                   
+0     0008c9af  NoSuchSetObject                   
+0     0008c9bd  memset                            
+0     0008c9c4  Example_Error                     
+0     0008c9ca  ImmediateRecorderTrigger          
+0     0008c9d0  InitFsiService                    
+0     0008c9e2  RestoreInts                       
+0     0008c9e8  SetHaltOptionCode                 
+0     0008c9ee  SetPdo1RxParam                    
+0     0008c9f4  SetPdo1TxParam                    
+0     0008c9fa  SetPdo2TxParam                    
+0     0008ca00  SetQuickStopOptionCode            
+0     0008ca06  SetSyncArrivalTime                
+0     0008ca0c  __TI_zero_init                    
+0     0008ca12  BlockInts                         
+0     0008ca16  GetOdSize                         
+0     0008ca1a  IsBufferUsedForProgramming        
+0     0008ca1e  ResetHardwareSysTimer             
+0     0008ca26  FMSTAT_Fail                       
+0     0008ca29  EmptyRecorderTrigger              
+0     0008ca2f  _system_pre_init                  
+0     0008ca31  CF_Done                           
+0     0008ca32  CF_Inactive                       
+0     0008ca33  _system_post_cinit                
+0     0008ca34  setupHallInputs                   
+0     0009f000  JtagPass                          
+abs   00000060  Cla1ConstLoadSize                 
+abs   00000100  __TI_STACK_SIZE                   
+abs   00000b62  Cla1ProgLoadSize                  
+abs   00000c88  RamfuncsLoadSize                  
+abs   00000c88  RamfuncsRunSize                   
+abs   ffffffff  __TI_pprof_out_hndl               
+abs   ffffffff  __TI_prof_data_size               
+abs   ffffffff  __TI_prof_data_start              
+n/a   UNDEFED   __c_args__                        
+
+[456 symbols]

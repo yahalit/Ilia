@@ -1,0 +1,15 @@
+
+This text file explains the project timing 
+
+The master is the wheel control. 
+It toggles a PWM signal 50% duty , 100 usec wide.
+At 50usec it issues a pulse to steering via the UART TX.
+Steering will make this a PWM synchronization via INPUT6 
+
+The PWM counts up. Until 50% it is low, rising at 50usec.
+This PWM times the periodic interrupt. 
+At the period start it sends its status via FSI: 10usec from cycle start must be left for the interface card to read the pevious FSI and reset its receiver. 
+Then a flush sequence is followed by status transmission. 
+At the end of period, it has ready information from the interface FSI and should read it. 
+
+

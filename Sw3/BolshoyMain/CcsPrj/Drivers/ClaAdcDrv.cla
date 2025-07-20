@@ -1,0 +1,126 @@
+/*
+ * ClaAdcDrv.cla
+ *
+ *  Created on: Aug 20, 2021
+ *      Author: Yahali
+ */
+#include "ClaShared.h"
+#define CPU1
+
+
+
+#include "..\F2838x_utils\f2838x_device.h"
+
+
+
+#define ADC_SCALE  4.57763671e-05f
+#define LSwThold 2.25f
+
+
+
+#pragma FUNCTION_OPTIONS ( Cla1Task1, "--opt_level=3" );
+
+
+
+__interrupt void Cla1Task1 ( void )
+{
+
+//float maxspeed ;
+long unsigned  newT   , useclapse   ;
+long tempL , tempT ;
+float  InvVpot  ; // , lswrequest , rswrequest ;
+//long unsigned  lTemp1, lTemp2 ;
+
+    ClaState.ClaIntCntr += 1 ;
+   ClaState.Raw.OLoadSt1 = AdcaResultRegs.ADCRESULT3 ;
+    ClaState.Raw.OLoadSt2 = AdcaResultRegs.ADCRESULT2 ;
+    ClaState.Raw.LaserSamp1 = AdcbResultRegs.ADCRESULT3 ;
+    ClaState.Raw.OLoadNK = AdcbResultRegs.ADCRESULT5 ;
+
+    ClaState.Raw.V12Out = AdccResultRegs.ADCRESULT0 ;
+    ClaState.Raw.V5Samp = AdccResultRegs.ADCRESULT1 ;
+    ClaState.Raw.HardVer = AdccResultRegs.ADCRESULT2 ;
+    ClaState.Raw.VPot = AdccResultRegs.ADCRESULT3 ;
+
+    // Deal time
+    newT = ECap6Regs.TSCTR ;
+    useclapse = (long unsigned) ( (float) ( newT - ClaState.Timer.RawEcapTimer ) * ClaInput.OneOverCpuFrqMHz );
+    //dT = (float) useclapse * 1e-6f ;
+
+    tempL = ClaState.Timer.RawEcapTimer + (long unsigned) ((float) useclapse * ClaInput.CpuFrqMHz )   ;
+    tempT = ClaState.Timer.UsecTimer + useclapse ;
+    ClaState.Timer.upd += 1  ;
+    ClaState.Timer.RawEcapTimer = tempL   ;
+    ClaState.Timer.UsecTimer = tempT ;
+    ClaState.Timer.upd += 1 ;
+
+    ClaState.Timer.UsecTimerAtMsec +=  (float) useclapse ;
+    if ( ClaState.Timer.UsecTimerAtMsec >= 1000.0f )
+    {
+        ClaState.Timer.UsecTimerAtMsec -= 1000.0f ;
+        ClaState.Timer.mSecTimer += 1 ;
+        ClaState.Timer.mSecTimerAtSec += 1.0f ;
+        if ( ClaState.Timer.mSecTimerAtSec >= 1000.0f )
+        {
+            ClaState.Timer.mSecTimerAtSec -= 1000.0f ;
+            ClaState.Timer.SecTimer += 1 ;
+        }
+    }
+
+
+    ClaState.Filt.OLoadSt1 =  ClaState.Filt.OLoadSt1 * 0.9f + 0.1f * ClaState.Raw.OLoadSt1 *(ADC_SCALE);
+    ClaState.Filt.OLoadSt2 =  ClaState.Filt.OLoadSt2 * 0.9f + 0.1f * ClaState.Raw.OLoadSt2 *(ADC_SCALE);
+    ClaState.Filt.LaserSamp1 =  ClaState.Filt.LaserSamp1 * 0.9f + 0.1f * ClaState.Raw.LaserSamp1 *(ADC_SCALE);
+    ClaState.Filt.OLoadNK = ClaState.Filt.OLoadNK * 0.9f + 0.1f * ClaState.Raw.OLoadNK *(ADC_SCALE);
+
+    ClaState.Filt.V12Out = ClaState.Filt.V12Out * 0.9f + 0.1f * ClaState.Raw.V12Out *(ADC_SCALE * 5.54f);
+    ClaState.Filt.V5Samp =  ClaState.Filt.V5Samp * 0.9f + 0.1f * ClaState.Raw.V5Samp *(ADC_SCALE * 2.0f );
+    ClaState.Filt.HardVer =  ClaState.Filt.HardVer * 0.9f + 0.1f * ClaState.Raw.HardVer *(ADC_SCALE);
+    ClaState.Filt.VPot =  ClaState.Filt.VPot * 0.9f + 0.1f * ClaState.Raw.VPot *(ADC_SCALE * 2.0f);
+
+
+
+    InvVpot = 1.0f / __mmaxf32(ClaState.Filt.VPot,2.0f) ;
+
+
+    ClaState.WheelArmRatio[0] = ClaState.Filt.OLoadSt1 * InvVpot ;
+    ClaState.WheelArmRatio[1] = ClaState.Filt.OLoadSt2 * InvVpot ;
+    // Deal inductive sensors
+    //////////////////////////
+}
+
+
+interrupt void Cla1Task2 ( void )
+{
+
+}
+
+interrupt void Cla1Task3 ( void )
+{
+
+}
+
+interrupt void Cla1Task4 ( void )
+{
+
+}
+
+interrupt void Cla1Task5 ( void )
+{
+
+}
+
+interrupt void Cla1Task6 ( void )
+{
+
+}
+
+interrupt void Cla1Task7 ( void )
+{
+
+}
+
+interrupt void Cla1Task8 ( void )
+{
+
+}

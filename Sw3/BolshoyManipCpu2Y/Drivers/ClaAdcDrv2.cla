@@ -1,0 +1,59 @@
+/*
+ * ClaAdcDrv.cla
+ *
+ *  Created on: Aug 20, 2021
+ *      Author: Yahali
+ */
+#include "ClaShared2.h"
+#define CPU1
+#include "..\F2838x_utils\f2838x_device.h"
+
+
+#define ADC_SCALE  4.57763671e-05f
+#define LSwThold 2.25f
+
+
+
+#pragma FUNCTION_OPTIONS ( Cla1Task1, "--opt_level=3" );
+
+
+__interrupt void Cla1Task1 ( void )
+{
+    ClaState.ClaIntCntr += 1 ;
+}
+
+
+interrupt void Cla1Task2 ( void )
+{
+
+}
+
+interrupt void Cla1Task3 ( void )
+{
+
+}
+
+interrupt void Cla1Task4 ( void )
+{
+
+}
+
+interrupt void Cla1Task5 ( void )
+{
+
+}
+
+interrupt void Cla1Task6 ( void )
+{
+
+}
+
+interrupt void Cla1Task7 ( void )
+{
+
+}
+
+interrupt void Cla1Task8 ( void )
+{
+
+}
