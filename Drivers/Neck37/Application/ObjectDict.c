@@ -880,7 +880,8 @@ const struct CShortDataItem ShortDataItem[]={
                                { &SysState.Homing.State, 0 ,5,1 } ,  //6
                                {(short*)  &SysState.Status.DisableAutoBrake,0,7,0} ,  // 7
                                {(short*)  &SysState.Debug.bDisablePotEncoderMatchTest,0,1,0} , // 8
-                               {(short*)  &SysState.SteerCorrection.bSteeringComprensation ,0, 1 , 0}   // 9
+                               {(short*)  &SysState.SteerCorrection.bSteeringComprensation ,0, 1 , 0},   // 9
+                               {(short*)&SysState.SusiMode , 0, 1,0}  // 10
 };
 
 

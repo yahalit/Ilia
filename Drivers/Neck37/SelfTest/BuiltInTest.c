@@ -580,9 +580,9 @@ void IdleCbit(void)
 
     SysState.CBit.bit.Pdo3IsPotDiff = ( ((short unsigned) ControlPars.UseCase & 3 ) == 3 ) ? 1 : 0 ;
 
-    if ( ControlPars.UseCase &  UC_USE_SW1_HM )
+    if ( SysState.SusiMode )
     {
-        LocalBit.bit.Din1 = IsDin1() ;
+        LocalBit.bit.SusiMode = 1 ;
     }
 
     if ( ControlPars.UseCase &  UC_USE_SW2_HM )

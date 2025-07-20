@@ -451,7 +451,7 @@ struct CCBit
     int unsigned Pdo3IsPotDiff : 1 ; // 27
     int unsigned Configured      : 1 ; // 28
     int unsigned Homed : 1 ; // 29
-    int unsigned Din1 : 1 ; // 30
+    int unsigned SusiMode : 1 ; // 30
     int unsigned Din2 : 1 ; //31
 };
 

@@ -724,6 +724,8 @@ void CheckSusiMode(void)
     {
         SysState.Mot.LoopClosureMode = E_LC_Torque_Mode ; // Default
         SysState.Mot.ReferenceMode = E_RefModeAnalogRef ;
+        SysState.Mot.QuickStop = 0 ;
+        Commutation.CommutationMode = COM_HALLS_ONLY;
     }
 }
 
